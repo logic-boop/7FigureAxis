@@ -1,0 +1,716 @@
+:root {
+  --bg-color: #050505;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --accent-color: #d4af37;
+  --font-main: "Inter", sans-serif;
+  --section-padding: 100px 10%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: none;
+} /* Hide default cursor */
+
+html,
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* This kills the horizontal scroll globally */
+  position: relative;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  overflow-x: hidden;
+}
+
+/* Custom Cursor */
+.cursor {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--accent-color);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease;
+}
+
+/* 3D Canvas Background */
+#canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Navbar Enhancement */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 10%;
+  align-items: center;
+  z-index: 100;
+  position: relative;
+  flex-direction: row; /* Forces horizontal layout on all screens */
+}
+.logo {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--accent-color);
+  letter-spacing: 2px;
+}
+.nav-links a {
+  margin-left: 25px;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  transition: 0.3s;
+}
+.nav-links a:hover {
+  color: var(--accent-color);
+}
+.nav-contact {
+  border: 1px solid var(--accent-color);
+  padding: 10px 25px;
+  border-radius: 2px;
+}
+
+/* Media Query */
+/* --- Desktop Hover Effects --- */
+.nav-links a {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+/* The "Go Up" effect */
+.nav-links a:hover {
+  transform: translateY(-5px);
+  color: var(--accent-color);
+}
+
+/* The Animated Underline */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-color);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Active Page State */
+.active-link {
+  color: var(--accent-color) !important;
+}
+.active-link::after {
+  width: 100% !important;
+}
+
+/* --- Mobile Hamburger Architecture --- */
+.hamburger {
+  display: none; /* Hidden on desktop */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+.hamburger span {
+  width: 100%;
+  height: 2px;
+  background-color: var(--accent-color);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-origin: center;
+}
+
+@media (max-width: 768px) {
+  /* Fix Navbar Alignment */
+  .navbar {
+    padding: 20px 5%;
+    flex-direction: row !important;
+    gap: 0;
+  }
+
+  .hamburger {
+    display: flex;
+    z-index: 3000; /* Moves X icon above the menu overlay */
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100vh;
+    background: rgba(5, 5, 5, 0.98);
+    backdrop-filter: blur(25px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    transition: right 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: 1500;
+
+    /* ADD THESE TWO LINES */
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .nav-links.mobile-active {
+    right: 0;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .nav-links a {
+    margin: 0;
+    font-size: 1.5rem; /* Better scaling for small screens */
+  }
+
+  .hero {
+    text-align: center;
+  }
+
+  .hero-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .btn-secondary {
+    margin: 0;
+  }
+
+  /* Fix for Bento Grid Overlap on Services Page */
+  .services-bento {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: auto !important;
+  }
+
+  /* Update only this part inside your media query */
+  @media (max-width: 768px) {
+    .services-bento {
+      grid-template-columns: 1fr !important; /* Forces single column */
+      grid-auto-rows: min-content !important; /* Allows boxes to fit content */
+      gap: 20px !important;
+    }
+
+    .bento-wide,
+    .bento-tall {
+      grid-column: span 1 !important; /* Resets wide cells to normal */
+      grid-row: span 1 !important; /* Resets tall cells to normal */
+    }
+
+    .bento-item {
+      padding: 30px 20px !important;
+      height: auto !important; /* Prevents text overflow */
+    }
+  }
+}
+
+/* Hero Section */
+.hero {
+  padding: var(--section-padding);
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.hero-tagline {
+  color: var(--accent-color);
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 15px;
+}
+.hero-title {
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  line-height: 0.85;
+  font-weight: 900;
+}
+.gold-gradient {
+  background: linear-gradient(90deg, #d4af37, #ffffff, #d4af37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shine 5s linear infinite;
+}
+
+.hero-description {
+  max-width: 550px;
+  color: var(--text-secondary);
+  margin: 35px 0;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--accent-color);
+  color: black;
+  padding: 18px 40px;
+  font-weight: 900;
+  text-decoration: none;
+  transition: 0.3s;
+  display: inline-block;
+}
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+}
+.btn-secondary {
+  margin-left: 25px;
+  color: white;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* media query */
+@media (max-width: 768px) {
+  .hero {
+    /* Reduce large desktop padding to give content room */
+    padding: 80px 5% 60px 5% !important;
+    text-align: center;
+    justify-content: center;
+    min-height: auto; /* Let content dictate height on mobile */
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-tagline {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+  }
+
+  .hero-title {
+    /* Adjust clamp for mobile so it doesn't overflow 320px screens */
+    font-size: clamp(2.5rem, 12vw, 4rem);
+    line-height: 1.1; /* Slightly more breathing room between lines */
+    margin-bottom: 20px;
+  }
+
+  .hero-title br {
+    display: none; /* Remove manual line break to let text flow naturally */
+  }
+
+  .hero-description {
+    font-size: 1rem;
+    margin: 20px 0 30px 0;
+    max-width: 100%; /* Use full width of the 5% padded area */
+  }
+
+  .hero-btns {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+  }
+
+  .btn-primary {
+    width: 100%; /* Full width buttons look more premium on mobile */
+    padding: 16px 20px;
+  }
+
+  .btn-secondary {
+    margin-left: 0; /* Remove desktop margin */
+    font-size: 0.9rem;
+    display: inline-block;
+  }
+}
+
+/* Expert Bar */
+.expert-bar {
+  background: #0a0a0a;
+  padding: 60px 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #1a1a1a;
+}
+.expert-label {
+  font-weight: bold;
+  color: #333;
+  letter-spacing: 2px;
+}
+.expert-logos span {
+  font-weight: 800;
+  color: #444;
+  margin-left: 30px;
+  transition: 0.3s;
+}
+.expert-logos span:hover {
+  color: var(--accent-color);
+}
+
+/* Animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Mobile Fixes */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .hero {
+    text-align: center;
+  }
+  .hero-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .btn-secondary {
+    margin: 0;
+  }
+  .expert-bar {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+}
+
+/* Media Query */
+@media (max-width: 768px) {
+  /* ... previous fixes ... */
+
+  .expert-bar {
+    flex-direction: column;
+    gap: 30px;
+    padding: 40px 5%; /* Reduced vertical padding for mobile tightness */
+    text-align: center;
+  }
+
+  .expert-label {
+    font-size: 0.8rem;
+    color: var(
+      --text-secondary
+    ); /* Give it a bit more visibility than #333 on mobile */
+    margin-bottom: 5px;
+  }
+
+  .expert-logos {
+    display: flex;
+    flex-wrap: wrap; /* CRITICAL: Allows logos to drop to next line instead of overflowing */
+    justify-content: center;
+    gap: 20px 30px; /* Vertical and Horizontal spacing */
+    width: 100%;
+  }
+
+  .expert-logos span {
+    margin-left: 0 !important; /* Kill the desktop margin that causes overflow */
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+}
+
+@media (max-width: 768px) {
+  footer {
+    /* Adjusted padding: 60px top, 7% sides for better text framing, 40px bottom */
+    padding: 60px 7% 40px 7% !important;
+    width: 100% !important;
+    box-sizing: border-box !important; /* Forces padding to stay inside the width */
+    overflow: hidden;
+    margin-top: 50px !important; /* Reduced top margin for mobile flow */
+  }
+
+  footer > div:first-child {
+    grid-template-columns: 1fr !important;
+    gap: 45px !important; /* Slightly more gap between the 3 main blocks */
+    text-align: center;
+    display: grid !important;
+  }
+
+  footer div:first-child > div {
+    max-width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers items like the logo and description */
+  }
+
+  /* Target the branding text specifically for readability */
+  footer p {
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Bottom copyright row fix */
+  footer > div:last-child {
+    margin-top: 50px !important; /* Pulls the copyright bar closer to the content */
+    padding-top: 25px !important;
+    flex-direction: column !important;
+    gap: 12px !important; /* Tighter gap between Copyright and Designer name */
+    text-align: center;
+    display: flex !important;
+  }
+}
+
+/* Success Stories */
+/* --- Success Stories Section --- */
+.success-stories-section {
+  padding: var(--section-padding);
+  background-color: #000;
+  overflow: hidden; /* Crucial to contain the marquee */
+}
+
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 1) 15%,
+    rgba(0, 0, 0, 1) 85%,
+    rgba(0, 0, 0, 0)
+  );
+}
+
+.marquee-track {
+  display: flex;
+  white-space: nowrap;
+  animation: scrollMarquee 40s linear infinite; /* Adjust speed as needed */
+  padding: 30px 0;
+  gap: 30px; /* Space between cards */
+}
+
+.story-card {
+  flex: 0 0 auto; /* Prevent cards from shrinking */
+  width: 320px; /* Fixed width for consistent look */
+  background: #080808;
+  border: 1px solid #1a1a1a;
+  padding: 30px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.client-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+  border: 2px solid var(--accent-color);
+}
+
+.story-text {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.story-client {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.story-stat {
+  font-weight: 900;
+  color: var(--accent-color);
+  margin-left: 10px;
+  letter-spacing: 1px;
+}
+
+@keyframes scrollMarquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(
+      -50%
+    ); /* Scroll exactly half the duplicated content */
+  }
+}
+
+/* --- Responsive Adjustments for Success Stories --- */
+@media (max-width: 768px) {
+  .success-stories-section {
+    padding: 60px 0; /* Remove horizontal padding as marquee fills */
+  }
+
+  .success-stories-section h2 {
+    font-size: clamp(2rem, 9vw, 3rem) !important;
+    margin-bottom: 30px !important;
+  }
+
+  .success-stories-section p {
+    font-size: 0.95rem !important;
+    padding: 0 5%; /* Add padding to text for readability */
+    max-width: 100%;
+  }
+
+  .marquee-track {
+    animation-duration: 30s; /* Slightly faster scroll on mobile */
+    padding: 20px 0;
+    gap: 20px;
+  }
+
+  .story-card {
+    width: 280px; /* Smaller card width for mobile */
+    padding: 25px;
+  }
+
+  .client-avatar {
+    width: 50px;
+    height: 50px;
+  }
+
+  .story-text {
+    font-size: 1rem;
+    margin-bottom: 15px;
+  }
+
+  .story-client,
+  .story-stat {
+    font-size: 0.8rem;
+  }
+}
+
+/* --- FAQ Section --- */
+.faq-section {
+  padding: var(--section-padding);
+}
+
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  background: #080808;
+  border: 1px solid #1a1a1a;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  overflow: hidden; /* Important for smooth answer transitions */
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 25px 30px;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.3s ease;
+}
+
+.faq-question:hover {
+  background: rgba(212, 175, 55, 0.05); /* Subtle hover effect */
+}
+
+.faq-question h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+
+.faq-icon {
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--accent-color);
+  transition: transform 0.3s ease;
+}
+
+.faq-question.active .faq-icon {
+  transform: rotate(45deg); /* Plus to X transition */
+}
+
+.faq-answer {
+  max-height: 0; /* Hidden by default */
+  padding: 0 30px;
+  overflow: hidden;
+  transition:
+    max-height 0.4s ease-out,
+    padding 0.4s ease-out;
+}
+
+.faq-answer p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.7;
+  padding-bottom: 25px; /* Spacing below answer */
+}
+
+.faq-answer.active {
+  max-height: 200px; /* Adjust as needed for content */
+  padding-top: 15px;
+}
+
+/* --- Responsive Adjustments for FAQ --- */
+@media (max-width: 768px) {
+  .faq-section h2 {
+    font-size: clamp(2rem, 9vw, 3rem) !important;
+    margin-bottom: 30px !important;
+  }
+
+  .faq-section p {
+    font-size: 0.95rem !important;
+    padding: 0 5%;
+    max-width: 100%;
+  }
+
+  .faq-question {
+    padding: 20px 20px;
+  }
+
+  .faq-question h3 {
+    font-size: 1rem;
+  }
+
+  .faq-icon {
+    font-size: 1.5rem;
+  }
+
+  .faq-answer {
+    padding: 0 20px;
+  }
+
+  .faq-answer p {
+    font-size: 0.9rem;
+    padding-bottom: 20px;
+  }
+}

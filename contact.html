@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connect | 7Figure Axis</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .contact-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 100px;
+        margin-top: 50px;
+      }
+
+      .action-tiles {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .tile {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-decoration: none;
+        transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .tile:hover {
+        background: rgba(212, 175, 55, 0.1);
+        border-color: var(--accent-color);
+        transform: translateX(20px);
+      }
+
+      .tile h3 {
+        font-size: 0.8rem;
+        color: var(--accent-color);
+        letter-spacing: 2px;
+        margin-bottom: 5px;
+      }
+      .tile p {
+        font-size: 1.5rem;
+        font-weight: 900;
+        color: white;
+      }
+
+      .form-container {
+        background: #111;
+        padding: 50px;
+        border: 1px solid #222;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        background: #000;
+        border: 1px solid #222;
+        padding: 15px;
+        color: white;
+        margin-bottom: 20px;
+        font-family: inherit;
+        transition: 0.3s;
+      }
+
+      input:focus,
+      textarea:focus {
+        border-color: var(--accent-color);
+        outline: none;
+      }
+
+      @media (max-width: 992px) {
+        .contact-layout {
+          grid-template-columns: 1fr;
+          gap: 50px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        /* 1. Contact Hero Scaling */
+        .contact-layout {
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 50px !important;
+          margin-top: 40px;
+        }
+
+        .reveal h2 {
+          font-size: clamp(2.5rem, 12vw, 4rem) !important;
+          line-height: 1 !important;
+        }
+
+        /* 2. Action Tiles (WhatsApp/Discord/Email) */
+        .action-tiles {
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 15px !important;
+        }
+
+        .tile {
+          padding: 25px !important;
+          display: flex !important;
+          justify-content: space-between;
+          align-items: center;
+          width: 100% !important;
+          box-sizing: border-box;
+        }
+
+        .tile h3 {
+          font-size: 0.7rem !important; /* Smaller label for mobile */
+        }
+
+        /* 3. Form Container Reset */
+        .form-container {
+          padding: 0 !important; /* Remove any desktop padding */
+        }
+
+        #contact-form {
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 15px !important;
+        }
+
+        /* FIX: Force the Name/Email grid to stack vertically */
+        #contact-form div[style*="display: grid"] {
+          grid-template-columns: 1fr !important;
+          gap: 15px !important;
+        }
+
+        input,
+        textarea {
+          width: 100% !important;
+          padding: 15px !important;
+          font-size: 1rem !important; /* Prevents iOS auto-zoom on focus */
+          background: #111 !important;
+          border: 1px solid #222 !important;
+          color: white;
+          border-radius: 4px;
+          box-sizing: border-box;
+        }
+
+        button.btn-primary {
+          padding: 20px !important;
+          margin-top: 10px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        /* 1. Container Adjustment */
+        div[style*="margin-top: 100px"][style*="overflow: hidden"] {
+          margin-top: 60px !important; /* Tighten space for mobile */
+          padding: 30px 5% !important;
+        }
+
+        /* 2. Heading scaling */
+        div[style*="margin-top: 100px"] p {
+          letter-spacing: 3px !important; /* Reduce excessive spacing on small screens */
+          font-size: 0.6rem !important;
+          margin-bottom: 20px !important;
+        }
+
+        /* 3. The Marquee Content Fix */
+        .marquee-content {
+          display: flex !important;
+          flex-wrap: wrap !important; /* Allows items to drop to next line if they don't fit */
+          justify-content: center !important;
+          gap: 20px 30px !important; /* Vertical and Horizontal spacing between logos */
+          width: 100% !important;
+        }
+
+        /* 4. Individual Logo Scaling */
+        .marquee-content span {
+          font-size: 1.1rem !important; /* Scale down from 1.5rem to prevent crowding */
+          letter-spacing: 1px;
+          flex: 0 1 auto; /* Ensures they only take up as much space as the text needs */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cursor"></div>
+    <div id="canvas-container"></div>
+
+    <nav class="navbar">
+      <div class="logo">7FIGURE AXIS</div>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">The Story</a>
+        <a href="services.html">Services</a>
+        <a href="mentorship.html">Mentorship</a>
+        <a href="contact.html" class="nav-contact">Contact</a>
+      </div>
+    </nav>
+
+    <section style="padding: var(--section-padding)">
+      <div class="reveal">
+        <h2
+          style="
+            font-size: clamp(3rem, 7vw, 6rem);
+            line-height: 0.85;
+            font-weight: 900;
+          "
+        >
+          INITIATE <br />
+          <span class="gold-gradient">CONTACT.</span>
+        </h2>
+        <p
+          style="
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin-top: 20px;
+          "
+        >
+          Ready to axis your revenue? Choose your entry point below or send a
+          formal inquiry.
+        </p>
+      </div>
+
+      <div class="contact-layout">
+        <div class="action-tiles reveal">
+          <a href="https://wa.me/447536630605" class="tile">
+            <div>
+              <h3>FASTEST RESPONSE</h3>
+              <p>WhatsApp</p>
+            </div>
+            <span style="font-size: 2rem">→</span>
+          </a>
+
+          <a href="https://discord.com/users/1206312152420323418" class="tile">
+            <div>
+              <h3>COMMUNITY ACCESS</h3>
+              <p>Discord Server</p>
+            </div>
+            <span style="font-size: 2rem">→</span>
+          </a>
+
+          <a href="mailto:Shopifyguru0927@gmail.com" class="tile">
+            <div>
+              <h3>BUSINESS INQUIRIES</h3>
+              <p>Email Guru</p>
+            </div>
+            <span style="font-size: 2rem">→</span>
+          </a>
+        </div>
+
+        <div class="form-container reveal">
+          <form id="contact-form">
+            <div
+              style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px"
+            >
+              <input type="text" placeholder="Full Name" required />
+              <input type="email" placeholder="Email Address" required />
+            </div>
+            <input
+              type="text"
+              placeholder="Subject (Mentorship / Services / Other)"
+            />
+            <textarea
+              rows="6"
+              placeholder="Tell me about your current revenue and your goals..."
+            ></textarea>
+            <button
+              type="submit"
+              class="btn-primary"
+              style="width: 100%; border: none; cursor: pointer"
+            >
+              Send Secure Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section reveal" style="padding: var(--section-padding)">
+      <div style="text-align: center; margin-bottom: 60px">
+        <h2
+          style="
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 1;
+            font-weight: 900;
+          "
+        >
+          QUESTIONS? <br />
+          <span class="gold-gradient">ANSWERS.</span>
+        </h2>
+        <p
+          style="
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 20px auto 0 auto;
+            font-size: 1.1rem;
+          "
+        >
+          Got more inquiries? We've got you covered.
+        </p>
+      </div>
+
+      <div class="faq-container">
+        <div class="faq-item">
+          <button class="faq-question">
+            <h3>Is 7FIGURE AXIS suitable for complete beginners?</h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>
+              Absolutely. While our strategies are advanced, our Accelerator
+              program is designed to guide aspiring entrepreneurs from the
+              ground up, providing a clear roadmap to their first $10k+ month.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <h3>
+              What kind of financial commitment is required to start
+              dropshipping?
+            </h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>
+              The financial commitment can vary, but we guide you on optimizing
+              your ad spend and sourcing to maximize ROI. We'll help you
+              structure a budget that scales with your growth.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <h3>How long does it typically take to see results?</h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>
+              While results vary, many of our Accelerator clients see their
+              first profitable sales within weeks, with significant milestones
+              achieved within 2-3 months by following our proven systems.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <h3>Do you offer a refund policy?</h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>
+              Due to the proprietary nature and immediate value of our
+              strategies and direct mentorship, all sales are final. We are
+              committed to your success and provide ongoing support to ensure
+              you achieve your goals.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Marquee Section -->
+    <div
+      style="
+        margin-top: 100px;
+        overflow: hidden;
+        padding: 40px 0;
+        border-top: 1px solid #111;
+      "
+    >
+      <p
+        style="
+          text-align: center;
+          color: #444;
+          font-size: 0.7rem;
+          letter-spacing: 5px;
+          margin-bottom: 30px;
+        "
+      >
+        INTEGRATED WITH
+      </p>
+      <div
+        class="marquee-content"
+        style="
+          display: flex;
+          justify-content: space-around;
+          opacity: 0.3;
+          filter: grayscale(1);
+        "
+      >
+        <span style="font-weight: 900; font-size: 1.5rem">SHOPIFY</span>
+        <span style="font-weight: 900; font-size: 1.5rem">STRIPE</span>
+        <span style="font-weight: 900; font-size: 1.5rem">KLAVIYO</span>
+        <span style="font-weight: 900; font-size: 1.5rem">META</span>
+        <span style="font-weight: 900; font-size: 1.5rem">TIKTOK</span>
+      </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer
+      style="
+        padding: 100px 10% 50px 10%;
+        background: #000;
+        border-top: 1px solid #111;
+        margin-top: 100px;
+      "
+    >
+      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 50px">
+        <div class="reveal">
+          <h2
+            class="footer-brand"
+            style="
+              color: var(--accent-color);
+              font-weight: 900;
+              letter-spacing: 2px;
+              margin-bottom: 20px;
+              transition: 0.3s;
+            "
+          >
+            7FIGURE AXIS
+          </h2>
+          <p
+            style="
+              color: var(--text-secondary);
+              max-width: 350px;
+              line-height: 1.8;
+            "
+          >
+            Mastering the architecture of e-commerce. From zero to seven
+            figures, we build the systems that define the future of
+            dropshipping.
+          </p>
+        </div>
+
+        <div class="reveal">
+          <h4
+            style="
+              margin-bottom: 25px;
+              font-size: 0.8rem;
+              letter-spacing: 2px;
+              color: #444;
+            "
+          >
+            NAVIGATION
+          </h4>
+          <ul style="list-style: none; padding: 0">
+            <li style="margin-bottom: 12px">
+              <a
+                href="index.html"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >Home</a
+              >
+            </li>
+            <li style="margin-bottom: 12px">
+              <a
+                href="about.html"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >The Story</a
+              >
+            </li>
+            <li style="margin-bottom: 12px">
+              <a
+                href="services.html"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >Services</a
+              >
+            </li>
+            <li style="margin-bottom: 12px">
+              <a
+                href="mentorship.html"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >Mentorship</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="reveal">
+          <h4
+            style="
+              margin-bottom: 25px;
+              font-size: 0.8rem;
+              letter-spacing: 2px;
+              color: #444;
+            "
+          >
+            CONNECT
+          </h4>
+          <ul style="list-style: none; padding: 0">
+            <li style="margin-bottom: 12px">
+              <a
+                href="https://wa.me/447536630605"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >WhatsApp</a
+              >
+            </li>
+            <li style="margin-bottom: 12px">
+              <a
+                href="https://discord.com/users/1206312152420323418"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >Discord</a
+              >
+            </li>
+            <li style="margin-bottom: 12px">
+              <a
+                href="mailto:Shopifyguru0927@gmail.com"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >Email</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div
+        style="
+          margin-top: 80px;
+          padding-top: 30px;
+          border-top: 1px solid #111;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          color: #333;
+          font-size: 0.7rem;
+          letter-spacing: 1px;
+        "
+      >
+        <p>&copy; 2026 7FIGURE AXIS. ALL RIGHTS RESERVED.</p>
+        <p>
+          DESIGNED BY
+          <span style="color: var(--text-secondary); text-transform: uppercase"
+            >Olubode A. James / Logic Tech Design & AI</span
+          >
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

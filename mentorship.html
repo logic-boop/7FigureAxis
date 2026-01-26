@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mentorship | 7Figure Axis</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Mentorship Specific Enhancements */
+      .pricing-section {
+        padding: var(--section-padding);
+        position: relative;
+      }
+
+      .pricing-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 40px;
+        margin-top: 60px;
+      }
+
+      .price-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 60px 40px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+        transition: border 0.4s ease;
+      }
+
+      .price-card:hover {
+        border-color: var(--accent-color);
+      }
+
+      .price-card.featured {
+        border: 2px solid var(--accent-color);
+        background: rgba(212, 175, 55, 0.05);
+      }
+
+      .badge {
+        position: absolute;
+        top: 30px;
+        right: -35px;
+        background: var(--accent-color);
+        color: black;
+        font-size: 0.7rem;
+        padding: 5px 40px;
+        font-weight: 900;
+        transform: rotate(45deg);
+        text-transform: uppercase;
+      }
+
+      .price-card h3 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        letter-spacing: -1px;
+      }
+      .price-card ul {
+        list-style: none;
+        margin: 40px 0;
+      }
+      .price-card li {
+        margin-bottom: 20px;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        font-size: 1.05rem;
+      }
+      .price-card li::before {
+        content: "→";
+        color: var(--accent-color);
+        margin-right: 15px;
+        font-weight: bold;
+      }
+
+      /* Hover Glow Effect */
+      .price-card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          600px circle at var(--x) var(--y),
+          rgba(212, 175, 55, 0.15),
+          transparent 40%
+        );
+        opacity: 0;
+        transition: opacity 0.5s;
+        pointer-events: none;
+      }
+      .price-card:hover::after {
+        opacity: 1;
+      }
+
+      @media (max-width: 768px) {
+        /* 1. Pricing Section Container */
+        .pricing-section {
+          padding: 60px 5% !important;
+        }
+
+        /* 2. Availability Bar (Fixing font size and padding) */
+        .pricing-section .reveal[style*="background: rgba(212, 175, 55, 0.1)"] {
+          padding: 15px 10px !important;
+          margin-bottom: 30px !important;
+        }
+
+        .pricing-section p[style*="font-size: 0.8rem"] {
+          font-size: 0.7rem !important; /* Smaller for narrow screens */
+          line-height: 1.4;
+        }
+
+        /* 3. Title Adjustment */
+        .pricing-section h2 {
+          font-size: clamp(2.2rem, 10vw, 3.5rem) !important;
+          text-align: center;
+          margin-bottom: 40px;
+          line-height: 1.1 !important;
+        }
+
+        /* 4. Pricing Cards Grid Reset */
+        .pricing-container {
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 30px !important;
+          width: 100% !important;
+        }
+
+        .price-card {
+          padding: 40px 25px !important;
+          width: 100% !important;
+          box-sizing: border-box;
+        }
+
+        /* 5. Special handling for the Featured/Elite Card */
+        .price-card.featured {
+          transform: scale(
+            1
+          ) !important; /* Remove desktop scale-up to prevent overflow */
+          border: 2px solid var(--accent-color) !important;
+        }
+
+        .price-card h3 {
+          font-size: 1.8rem !important;
+          margin-bottom: 15px;
+        }
+
+        /* Adjust the bullet points for readability */
+        .price-card ul {
+          padding: 0;
+          margin-top: 20px;
+        }
+
+        .price-card li {
+          font-size: 0.95rem;
+          margin-bottom: 12px;
+          list-style: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cursor"></div>
+    <div id="canvas-container"></div>
+
+    <nav class="navbar">
+      <div class="logo">7FIGURE AXIS</div>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">The Story</a>
+        <a href="services.html">Services</a>
+        <a href="mentorship.html" class="active-link">Mentorship</a>
+        <a href="contact.html" class="nav-contact">Contact</a>
+      </div>
+    </nav>
+
+    <section class="pricing-section">
+      <div
+        style="
+          background: rgba(212, 175, 55, 0.1);
+          border: 1px solid var(--accent-color);
+          padding: 10px;
+          text-align: center;
+          margin-bottom: 50px;
+          border-radius: 5px;
+        "
+        class="reveal"
+      >
+        <p style="font-size: 0.8rem; letter-spacing: 2px; font-weight: 700">
+          <span style="color: #ff4b4b">●</span> CURRENT AVAILABILITY: 2 SLOTS
+          REMAINING FOR JANUARY
+        </p>
+      </div>
+
+      <div class="reveal">
+        <h2
+          style="
+            font-size: clamp(3rem, 6vw, 5rem);
+            line-height: 0.9;
+            font-weight: 900;
+          "
+        >
+          CHOOSE YOUR <span class="gold-gradient">LEVEL.</span>
+        </h2>
+      </div>
+
+      <div class="pricing-container">
+        <div class="price-card reveal">
+          <div style="margin-bottom: 20px">
+            <span
+              style="
+                font-size: 0.8rem;
+                color: var(--accent-color);
+                font-weight: 900;
+                border: 1px solid var(--accent-color);
+                padding: 2px 8px;
+              "
+              >ENTRY LEVEL</span
+            >
+          </div>
+          <h3>The Accelerator</h3>
+          <p style="color: var(--text-secondary)">
+            A step-by-step roadmap for those tired of failing and ready for
+            their first $10k month.
+          </p>
+          <ul>
+            <li><strong>Phase 1:</strong> High-Ticket Niche Selection</li>
+            <li><strong>Phase 2:</strong> Conversion-Optimized Store</li>
+            <li><strong>Phase 3:</strong> The "Guru" Ad Strategy</li>
+          </ul>
+          <div
+            style="
+              margin: 30px 0;
+              border-top: 1px solid #222;
+              padding-top: 20px;
+            "
+          >
+            <p style="font-size: 0.8rem; color: #555">
+              IDEAL FOR: Starters with limited time but high ambition.
+            </p>
+          </div>
+          <a
+            href="https://wa.me/447536630605"
+            class="btn-primary"
+            style="width: 100%; text-align: center"
+            >Secure Accelerator Slot</a
+          >
+        </div>
+
+        <div class="price-card featured reveal">
+          <div class="badge">ELITE ACCESS</div>
+          <div style="margin-bottom: 20px">
+            <span
+              style="
+                font-size: 0.8rem;
+                color: #000;
+                background: var(--accent-color);
+                font-weight: 900;
+                padding: 2px 8px;
+              "
+              >MOST SCALABLE</span
+            >
+          </div>
+          <h3 class="gold-gradient">7-Figure Mastery</h3>
+          <p style="color: var(--text-secondary)">
+            Direct 1-on-1 access to my personal systems. We don't just build a
+            store; we build a legacy.
+          </p>
+          <ul>
+            <li><strong>Personalized:</strong> Weekly 1-on-1 Zoom Audits</li>
+            <li><strong>Asset:</strong> Custom 3D Logo & Branding Kit</li>
+            <li><strong>Edge:</strong> My Secret "Winning Product" List</li>
+            <li><strong>Passive:</strong> Automated Email/SMS Systems</li>
+            <li><strong>Bonus:</strong> Crypto Wealth Management Intro</li>
+          </ul>
+          <div
+            style="
+              margin: 30px 0;
+              border-top: 1px solid rgba(212, 175, 55, 0.2);
+              padding-top: 20px;
+            "
+          >
+            <p style="font-size: 0.8rem; color: var(--accent-color)">
+              IDEAL FOR: Serious entrepreneurs ready to scale to $100k+/mo.
+            </p>
+          </div>
+          <a
+            href="https://wa.me/447536630605"
+            class="btn-primary"
+            style="width: 100%; text-align: center"
+            >Apply for Elite Mastery</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section
+      class="success-stories-section reveal"
+      style="padding: var(--section-padding)"
+    >
+      <div style="text-align: center; margin-bottom: 60px">
+        <h2
+          style="
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 1;
+            font-weight: 900;
+          "
+        >
+          7-FIGURE <br />
+          <span class="gold-gradient">RESULTS.</span>
+        </h2>
+        <p
+          style="
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 20px auto 0 auto;
+            font-size: 1.1rem;
+          "
+        >
+          Real transformations, real revenue. See how our clients are dominating
+          the e-commerce landscape.
+        </p>
+      </div>
+
+      <div class="marquee-container">
+        <div class="marquee-track">
+          <div class="story-card">
+            <img
+              src="https://via.placeholder.com/150/d4af37/000000?text=CLIENT+1"
+              alt="Client Testimonial"
+              class="client-avatar"
+            />
+            <p class="story-text">
+              "Hit my first $100k month after just 6 weeks. The strategies are
+              insane."
+            </p>
+            <p class="story-client">
+              - Alex P. <span class="story-stat">$120,000/mo</span>
+            </p>
+          </div>
+          <div class="story-card">
+            <img
+              src="https://via.placeholder.com/150/d4af37/000000?text=CLIENT+2"
+              alt="Client Testimonial"
+              class="client-avatar"
+            />
+            <p class="story-text">
+              "Finally broke through to 7 figures. This mentorship changed
+              everything."
+            </p>
+            <p class="story-client">
+              - Sarah M. <span class="story-stat">$1.1M/year</span>
+            </p>
+          </div>
+          <div class="story-card">
+            <img
+              src="https://via.placeholder.com/150/d4af37/000000?text=CLIENT+3"
+              alt="Client Testimonial"
+              class="client-avatar"
+            />
+            <p class="story-text">
+              "From struggling to thriving. Best investment I've ever made."
+            </p>
+            <p class="story-client">
+              - James L. <span class="story-stat">$85,000/mo</span>
+            </p>
+          </div>
+          <div class="story-card">
+            <img
+              src="https://via.placeholder.com/150/d4af37/000000?text=CLIENT+4"
+              alt="Client Testimonial"
+              class="client-avatar"
+            />
+            <p class="story-text">
+              "The ad frameworks are truly next-level. ROAS is consistently
+              5x+."
+            </p>
+            <p class="story-client">
+              - Emily R. <span class="story-stat">$150,000/mo</span>
+            </p>
+          </div>
+          <div class="story-card">
+            <img
+              src="https://via.placeholder.com/150/d4af37/000000?text=CLIENT+1"
+              alt="Client Testimonial"
+              class="client-avatar"
+            />
+            <p class="story-text">
+              "Hit my first $100k month after just 6 weeks. The strategies are
+              insane."
+            </p>
+            <p class="story-client">
+              - Alex P. <span class="story-stat">$120,000/mo</span>
+            </p>
+          </div>
+          <div class="story-card">
+            <img
+              src="https://via.placeholder.com/150/d4af37/000000?text=CLIENT+2"
+              alt="Client Testimonial"
+              class="client-avatar"
+            />
+            <p class="story-text">
+              "Finally broke through to 7 figures. This mentorship changed
+              everything."
+            </p>
+            <p class="story-client">
+              - Sarah M. <span class="story-stat">$1.1M/year</span>
+            </p>
+          </div>
+          <div class="story-card">
+            <img
+              src="https://via.placeholder.com/150/d4af37/000000?text=CLIENT+3"
+              alt="Client Testimonial"
+              class="client-avatar"
+            />
+            <p class="story-text">
+              "From struggling to thriving. Best investment I've ever made."
+            </p>
+            <p class="story-client">
+              - James L. <span class="story-stat">$85,000/mo</span>
+            </p>
+          </div>
+          <div class="story-card">
+            <img
+              src="https://via.placeholder.com/150/d4af37/000000?text=CLIENT+4"
+              alt="Client Testimonial"
+              class="client-avatar"
+            />
+            <p class="story-text">
+              "The ad frameworks are truly next-level. ROAS is consistently
+              5x+."
+            </p>
+            <p class="story-client">
+              - Emily R. <span class="story-stat">$150,000/mo</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="faq-section reveal" style="padding: var(--section-padding)">
+      <div style="text-align: center; margin-bottom: 60px">
+        <h2
+          style="
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 1;
+            font-weight: 900;
+          "
+        >
+          QUESTIONS? <br />
+          <span class="gold-gradient">ANSWERS.</span>
+        </h2>
+        <p
+          style="
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 20px auto 0 auto;
+            font-size: 1.1rem;
+          "
+        >
+          Got more inquiries? We've got you covered.
+        </p>
+      </div>
+
+      <div class="faq-container">
+        <div class="faq-item">
+          <button class="faq-question">
+            <h3>Is 7FIGURE AXIS suitable for complete beginners?</h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>
+              Absolutely. While our strategies are advanced, our Accelerator
+              program is designed to guide aspiring entrepreneurs from the
+              ground up, providing a clear roadmap to their first $10k+ month.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <h3>
+              What kind of financial commitment is required to start
+              dropshipping?
+            </h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>
+              The financial commitment can vary, but we guide you on optimizing
+              your ad spend and sourcing to maximize ROI. We'll help you
+              structure a budget that scales with your growth.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <h3>How long does it typically take to see results?</h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>
+              While results vary, many of our Accelerator clients see their
+              first profitable sales within weeks, with significant milestones
+              achieved within 2-3 months by following our proven systems.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <h3>Do you offer a refund policy?</h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>
+              Due to the proprietary nature and immediate value of our
+              strategies and direct mentorship, all sales are final. We are
+              committed to your success and provide ongoing support to ensure
+              you achieve your goals.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer
+      style="
+        padding: 100px 10% 50px 10%;
+        background: #000;
+        border-top: 1px solid #111;
+        margin-top: 100px;
+      "
+    >
+      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 50px">
+        <div class="reveal">
+          <h2
+            class="footer-brand"
+            style="
+              color: var(--accent-color);
+              font-weight: 900;
+              letter-spacing: 2px;
+              margin-bottom: 20px;
+              transition: 0.3s;
+            "
+          >
+            7FIGURE AXIS
+          </h2>
+          <p
+            style="
+              color: var(--text-secondary);
+              max-width: 350px;
+              line-height: 1.8;
+            "
+          >
+            Mastering the architecture of e-commerce. From zero to seven
+            figures, we build the systems that define the future of
+            dropshipping.
+          </p>
+        </div>
+
+        <div class="reveal">
+          <h4
+            style="
+              margin-bottom: 25px;
+              font-size: 0.8rem;
+              letter-spacing: 2px;
+              color: #444;
+            "
+          >
+            NAVIGATION
+          </h4>
+          <ul style="list-style: none; padding: 0">
+            <li style="margin-bottom: 12px">
+              <a
+                href="index.html"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >Home</a
+              >
+            </li>
+            <li style="margin-bottom: 12px">
+              <a
+                href="about.html"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >The Story</a
+              >
+            </li>
+            <li style="margin-bottom: 12px">
+              <a
+                href="services.html"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >Services</a
+              >
+            </li>
+            <li style="margin-bottom: 12px">
+              <a
+                href="mentorship.html"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >Mentorship</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="reveal">
+          <h4
+            style="
+              margin-bottom: 25px;
+              font-size: 0.8rem;
+              letter-spacing: 2px;
+              color: #444;
+            "
+          >
+            CONNECT
+          </h4>
+          <ul style="list-style: none; padding: 0">
+            <li style="margin-bottom: 12px">
+              <a
+                href="https://wa.me/447536630605"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >WhatsApp</a
+              >
+            </li>
+            <li style="margin-bottom: 12px">
+              <a
+                href="https://discord.com/users/1206312152420323418"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >Discord</a
+              >
+            </li>
+            <li style="margin-bottom: 12px">
+              <a
+                href="mailto:Shopifyguru0927@gmail.com"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >Email</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div
+        style="
+          margin-top: 80px;
+          padding-top: 30px;
+          border-top: 1px solid #111;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          color: #333;
+          font-size: 0.7rem;
+          letter-spacing: 1px;
+        "
+      >
+        <p>&copy; 2026 7FIGURE AXIS. ALL RIGHTS RESERVED.</p>
+        <p>
+          DESIGNED BY
+          <span style="color: var(--text-secondary); text-transform: uppercase"
+            >Olubode A. James / Logic Tech Design & AI</span
+          >
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+      // Special Mouse-Tracking Glow for Cards
+      const cards = document.querySelectorAll(".price-card");
+      cards.forEach((card) => {
+        card.onmousemove = (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty("--x", `${x}px`);
+          card.style.setProperty("--y", `${y}px`);
+        };
+      });
+    </script>
+  </body>
+</html>

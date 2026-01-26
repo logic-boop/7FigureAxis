@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services | 7Figure Axis</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .services-bento {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: 300px;
+        gap: 20px;
+        margin-top: 50px;
+      }
+
+      .bento-item {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(15px);
+        padding: 40px;
+        position: relative;
+        overflow: hidden;
+        transition: 0.5s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      .bento-item:hover {
+        border-color: var(--accent-color);
+        background: rgba(212, 175, 55, 0.05);
+      }
+
+      /* Large cell for Ads Management */
+      .bento-wide {
+        grid-column: span 2;
+      }
+
+      /* Large cell for Web Design/3D */
+      .bento-tall {
+        grid-row: span 2;
+      }
+
+      .bento-item h3 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        z-index: 2;
+      }
+
+      .bento-item p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        z-index: 2;
+      }
+
+      .service-number {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 4rem;
+        font-weight: 900;
+        opacity: 0.05;
+        color: var(--accent-color);
+      }
+
+      .glow-point {
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        background: var(--accent-color);
+        filter: blur(100px);
+        opacity: 0.1;
+        top: -50px;
+        left: -50px;
+      }
+
+      @media (max-width: 768px) {
+        /* 1. Header Scaling */
+        section[style*="padding: var(--section-padding)"] h2 {
+          font-size: clamp(2.5rem, 12vw, 4rem) !important;
+          line-height: 1 !important;
+          margin-bottom: 15px;
+        }
+
+        /* 2. Bento Container Reset */
+        .services-bento {
+          display: flex !important;
+          flex-direction: column !important; /* Forces vertical stack */
+          gap: 20px !important;
+          margin-top: 40px !important;
+        }
+
+        /* 3. Item Normalization (Removes Wide/Tall spans) */
+        .bento-item {
+          grid-column: span 1 !important; /* Resets wide items */
+          grid-row: span 1 !important; /* Resets tall items */
+          min-height: 220px !important; /* Consistent height for mobile */
+          padding: 30px !important;
+          width: 100% !important;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end; /* Keeps content at the bottom for premium feel */
+        }
+
+        /* 4. Service Number & Text scaling */
+        .service-number {
+          font-size: 0.8rem !important;
+          margin-bottom: 10px;
+        }
+
+        .bento-item h3 {
+          font-size: 1.5rem !important;
+          margin-bottom: 10px;
+        }
+
+        .bento-item p {
+          font-size: 0.9rem !important;
+          line-height: 1.5 !important;
+          color: var(--text-secondary);
+        }
+
+        /* 5. Glow Point Optimization */
+        .glow-point {
+          width: 100px !important;
+          height: 100px !important;
+          filter: blur(40px) !important; /* Softer glow for smaller screens */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cursor"></div>
+    <div id="canvas-container"></div>
+
+    <nav class="navbar">
+      <div class="logo">7FIGURE AXIS</div>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">The Story</a>
+        <a href="services.html" class="active-link">Services</a>
+        <a href="mentorship.html">Mentorship</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+
+    <section style="padding: var(--section-padding)">
+      <div class="reveal">
+        <h2
+          style="
+            font-size: clamp(3rem, 7vw, 6rem);
+            line-height: 0.85;
+            font-weight: 900;
+          "
+        >
+          HIGH-TIER <br />
+          <span class="gold-gradient">EXECUTION.</span>
+        </h2>
+        <p
+          style="
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin-top: 20px;
+          "
+        >
+          I don't just consult; I deploy systems that generate 7-figure results.
+          Choose a service to begin your transformation.
+        </p>
+      </div>
+
+      <div class="services-bento">
+        <div class="bento-item bento-wide reveal">
+          <div class="glow-point"></div>
+          <span class="service-number">01</span>
+          <h3>Paid Acquisition</h3>
+          <p>
+            Full-funnel management across Meta, TikTok, and Google Ads.
+            Engineered for 5x-10x ROAS.
+          </p>
+        </div>
+
+        <div class="bento-item bento-tall reveal">
+          <div class="glow-point"></div>
+          <span class="service-number">02</span>
+          <h3>3D Brand Identity</h3>
+          <p>
+            Premium 3D logo design and brand kits that make your store look like
+            a global powerhouse from day one.
+          </p>
+        </div>
+
+        <div class="bento-item reveal">
+          <span class="service-number">03</span>
+          <h3>Shopify Architecture</h3>
+          <p>
+            Custom theme development focused on extreme speed and psychological
+            conversion triggers.
+          </p>
+        </div>
+
+        <div class="bento-item reveal">
+          <span class="service-number">04</span>
+          <h3>Niche Mastery</h3>
+          <p>
+            Data-backed niche and product discovery using proprietary 7-figure
+            research frameworks.
+          </p>
+        </div>
+
+        <div class="bento-item bento-wide reveal">
+          <div class="glow-point"></div>
+          <span class="service-number">05</span>
+          <h3>Retention Systems</h3>
+          <p>
+            Automated Email & SMS flows that recover 30% of lost revenue on
+            autopilot.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer
+      style="
+        padding: 100px 10% 50px 10%;
+        background: #000;
+        border-top: 1px solid #111;
+        margin-top: 100px;
+      "
+    >
+      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 50px">
+        <div class="reveal">
+          <h2
+            class="footer-brand"
+            style="
+              color: var(--accent-color);
+              font-weight: 900;
+              letter-spacing: 2px;
+              margin-bottom: 20px;
+              transition: 0.3s;
+            "
+          >
+            7FIGURE AXIS
+          </h2>
+          <p
+            style="
+              color: var(--text-secondary);
+              max-width: 350px;
+              line-height: 1.8;
+            "
+          >
+            Mastering the architecture of e-commerce. From zero to seven
+            figures, we build the systems that define the future of
+            dropshipping.
+          </p>
+        </div>
+
+        <div class="reveal">
+          <h4
+            style="
+              margin-bottom: 25px;
+              font-size: 0.8rem;
+              letter-spacing: 2px;
+              color: #444;
+            "
+          >
+            NAVIGATION
+          </h4>
+          <ul style="list-style: none; padding: 0">
+            <li style="margin-bottom: 12px">
+              <a
+                href="index.html"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >Home</a
+              >
+            </li>
+            <li style="margin-bottom: 12px">
+              <a
+                href="about.html"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >The Story</a
+              >
+            </li>
+            <li style="margin-bottom: 12px">
+              <a
+                href="services.html"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >Services</a
+              >
+            </li>
+            <li style="margin-bottom: 12px">
+              <a
+                href="mentorship.html"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >Mentorship</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="reveal">
+          <h4
+            style="
+              margin-bottom: 25px;
+              font-size: 0.8rem;
+              letter-spacing: 2px;
+              color: #444;
+            "
+          >
+            CONNECT
+          </h4>
+          <ul style="list-style: none; padding: 0">
+            <li style="margin-bottom: 12px">
+              <a
+                href="https://wa.me/447536630605"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >WhatsApp</a
+              >
+            </li>
+            <li style="margin-bottom: 12px">
+              <a
+                href="https://discord.com/users/1206312152420323418"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >Discord</a
+              >
+            </li>
+            <li style="margin-bottom: 12px">
+              <a
+                href="mailto:Shopifyguru0927@gmail.com"
+                class="footer-link"
+                style="color: var(--text-secondary); font-size: 0.9rem"
+                >Email</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div
+        style="
+          margin-top: 80px;
+          padding-top: 30px;
+          border-top: 1px solid #111;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          color: #333;
+          font-size: 0.7rem;
+          letter-spacing: 1px;
+        "
+      >
+        <p>&copy; 2026 7FIGURE AXIS. ALL RIGHTS RESERVED.</p>
+        <p>
+          DESIGNED BY
+          <span style="color: var(--text-secondary); text-transform: uppercase"
+            >Olubode A. James / Logic Tech Design & AI</span
+          >
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
