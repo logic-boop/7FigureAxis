@@ -1,0 +1,25 @@
+{
+  "name": "7figureaxis",
+  "version": "1.0.0",
+  "description": "![Project Status](https://img.shields.io/badge/Status-Live-gold?style=for-the-badge) ![Tech Stack](https://img.shields.io/badge/Tech-Three.js%20%7C%20GSAP%20%7C%20FullStack-black?style=for-the-badge)",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/logic-boop/7FigureAxis.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/logic-boop/7FigureAxis/issues"
+  },
+  "homepage": "https://github.com/logic-boop/7FigureAxis#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "nodemailer": "^7.0.12"
+  }
+}

@@ -11,8 +11,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: none;
-} /* Hide default cursor */
+  cursor: default; /* Ensures custom cursor works */
+}
 
 html,
 body {
@@ -31,15 +31,21 @@ body {
 }
 
 /* Custom Cursor */
+a,
+button,
+.tile,
+.work-item {
+  cursor: pointer !important; /* Forces the hand icon on interactive elements */
+}
+
 .cursor {
+  pointer-events: none; /* Ensures the custom circle doesn't block your clicks */
+  position: fixed;
   width: 20px;
   height: 20px;
   border: 2px solid var(--accent-color);
   border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
   z-index: 9999;
-  transition: transform 0.1s ease;
 }
 
 /* 3D Canvas Background */
