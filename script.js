@@ -1,4 +1,90 @@
-// 1. THREE.JS 3D BACKGROUND
+/**
+ * 7FIGURE AXIS - ELITE PERFORMANCE SCRIPT
+ * Finalized Version for Olubode A. James
+ */
+
+// 1. ENTRANCE ANIMATION & PRELOADER FAILSAFE
+window.addEventListener("load", () => {
+  // Ensure the page starts at the top for the best entrance effect
+  window.scrollTo(0, 0);
+
+  const overlay = document.querySelector(".initial-load-overlay");
+
+  // High-performance trigger for the CSS opacity transition
+  document.body.classList.add("loaded");
+
+  const tl = gsap.timeline({
+    defaults: { ease: "power4.out" },
+  });
+
+  // PRELOADER LOGIC: Checks if overlay exists to prevent script crashes
+  if (overlay) {
+    tl.to(overlay, {
+      opacity: 0,
+      duration: 1.2,
+      delay: 0.8,
+      onComplete: () => {
+        overlay.style.display = "none";
+        document.body.style.overflow = "auto";
+      },
+    });
+  } else {
+    // Failsafe: If HTML is missing the overlay, just unlock the scroll
+    document.body.style.overflow = "auto";
+    tl.set({}, { delay: 0.1 });
+  }
+
+  // ELITE ENTRANCE SEQUENCE (The "Ease Motion" reveal)
+  tl.from(
+    ".navbar",
+    {
+      y: -100,
+      opacity: 0,
+      duration: 1.2,
+    },
+    "-=0.6",
+  )
+    .from(
+      ".hero-bg-logo",
+      {
+        scale: 0.6,
+        opacity: 0,
+        duration: 2,
+        ease: "power2.out",
+      },
+      "-=1",
+    )
+    .from(
+      ".hero-title",
+      {
+        y: 80,
+        opacity: 0,
+        stagger: 0.15,
+        duration: 1.5,
+      },
+      "-=1.4",
+    )
+    .from(
+      ".hero-description",
+      {
+        opacity: 1,
+        y: 30,
+        duration: 1,
+      },
+      "-=1",
+    )
+    .from(
+      ".hero-btns",
+      {
+        scale: 0.9,
+        opacity: 0,
+        duration: 0.8,
+      },
+      "-=0.8",
+    );
+});
+
+// 2. THREE.JS 3D BACKGROUND (THE GOLDEN AXIS)
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -14,216 +100,208 @@ if (canvasContainer) {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   canvasContainer.appendChild(renderer.domElement);
 
-  const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
+  // High-detail Torus Knot for a premium mathematical feel
+  const geometry = new THREE.TorusKnotGeometry(12, 3.5, 180, 20);
   const material = new THREE.MeshBasicMaterial({
-    color: 0x00f2ff,
+    color: 0xd4af37, // Brand Gold
     wireframe: true,
     transparent: true,
-    opacity: 0.1,
+    opacity: 0.12,
   });
+
   const torusKnot = new THREE.Mesh(geometry, material);
   scene.add(torusKnot);
-
-  camera.position.z = 25;
+  camera.position.z = 30;
 
   function animate3D() {
     requestAnimationFrame(animate3D);
-    const scrollSpeed = window.scrollY * 0.0001;
-    torusKnot.rotation.x += 0.005 + scrollSpeed;
-    torusKnot.rotation.y += 0.003 + scrollSpeed;
+    const scrollY = window.scrollY;
+
+    // Dynamic rotation that responds to user scrolling
+    torusKnot.rotation.x += 0.002 + scrollY * 0.00005;
+    torusKnot.rotation.y += 0.001 + scrollY * 0.00005;
+
     renderer.render(scene, camera);
   }
   animate3D();
 }
 
-// 2. CURSOR LOGIC (FIXED: Standard Pointer + GSAP Follower)
+// 3. CURSOR & LOGO PARALLAX PHYSICS
+const hero = document.querySelector(".hero");
+const bgLogo = document.querySelector(".hero-bg-logo");
 const cursor = document.querySelector(".cursor");
-if (cursor) {
-  // Make sure the custom cursor doesn't block clicks
-  cursor.style.pointerEvents = "none";
 
-  document.addEventListener("mousemove", (e) => {
+document.addEventListener("mousemove", (e) => {
+  const { clientX, clientY } = e;
+
+  // Custom Cursor movement
+  if (cursor) {
     gsap.to(cursor, {
-      x: e.clientX,
-      y: e.clientY,
-      duration: 0.1,
+      x: clientX,
+      y: clientY,
+      duration: 0.2,
       ease: "power2.out",
     });
-  });
+  }
 
-  // Scale effect on hoverable elements
-  const interactives = document.querySelectorAll(
-    "a, button, .work-item, .tile, .faq-question",
-  );
-  interactives.forEach((el) => {
-    el.addEventListener("mouseenter", () => {
-      gsap.to(cursor, {
-        scale: 1.5,
-        backgroundColor: "rgba(0, 242, 255, 0.2)",
-        duration: 0.3,
-      });
+  // 3D Background Logo Tilt
+  if (hero && bgLogo) {
+    const xPos = (clientX / window.innerWidth - 0.5) * 35;
+    const yPos = (clientY / window.innerHeight - 0.5) * 35;
+
+    gsap.to(bgLogo, {
+      rotationY: xPos,
+      rotationX: -yPos,
+      transformPerspective: 1200,
+      duration: 1.8,
+      ease: "power3.out",
     });
-    el.addEventListener("mouseleave", () => {
-      gsap.to(cursor, {
-        scale: 1,
-        backgroundColor: "transparent",
-        duration: 0.3,
-      });
-    });
-  });
-}
-
-// 3. GHOST REVEAL & MAGNETIC PROJECT LIST
-const workItems = document.querySelectorAll(".work-item");
-const hoverReveal = document.querySelector(".project-hover-reveal");
-const hoverImage = document.querySelector(".hover-reveal-img");
-
-if (workItems.length > 0 && hoverReveal) {
-  workItems.forEach((item) => {
-    item.addEventListener("mouseenter", () => {
-      const imgPath = item.getAttribute("data-img");
-      if (hoverImage) hoverImage.src = imgPath;
-      gsap.to(hoverReveal, {
-        opacity: 1,
-        scale: 1,
-        duration: 0.4,
-        ease: "power2.out",
-      });
-    });
-    item.addEventListener("mouseleave", () => {
-      gsap.to(hoverReveal, {
-        opacity: 0,
-        scale: 0.8,
-        duration: 0.4,
-        ease: "power2.in",
-      });
-    });
-    item.addEventListener("mousemove", (e) => {
-      gsap.to(hoverReveal, {
-        x: e.clientX + 20,
-        y: e.clientY - 125,
-        duration: 0.8,
-        ease: "power3.out",
-      });
-      if (hoverImage)
-        gsap.to(hoverImage, { rotation: e.movementX * 0.5, duration: 0.8 });
-    });
-  });
-}
-
-// 4. PURE CODE FORM HANDLER
-const contactForm = document.getElementById("contact-form");
-if (contactForm) {
-  contactForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const btn = contactForm.querySelector("button");
-    const originalText = btn.innerText;
-    btn.innerText = "INITIATING SECURE TRANSIT...";
-
-    const inputs = contactForm.querySelectorAll("input");
-    const textArea = contactForm.querySelector("textarea");
-
-    const payload = {
-      name: inputs[0].value,
-      email: inputs[1].value,
-      subject: inputs[2].value,
-      message: textArea ? textArea.value : "",
-    };
-
-    try {
-      const response = await fetch("http://localhost:5000/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (response.ok) {
-        btn.innerText = "HANDSHAKE SUCCESS ✓";
-        contactForm.reset();
-      } else {
-        throw new Error();
-      }
-    } catch (err) {
-      btn.innerText = "TRANSIT ERROR! RETRY";
-    }
-    setTimeout(() => {
-      btn.innerText = originalText;
-    }, 3000);
-  });
-}
-
-// 5. GSAP ENTRANCE & SCROLL REVEALS
-gsap.registerPlugin(ScrollTrigger);
-
-window.addEventListener("load", () => {
-  const tl = gsap.timeline();
-  tl.from(".navbar", { y: -50, opacity: 0, duration: 1 });
-  if (document.querySelector(".hero-title")) {
-    tl.from(".hero-tagline", { x: -30, opacity: 0, duration: 0.5 }, "-=0.5")
-      .from(
-        ".hero-title",
-        { y: 50, opacity: 0, duration: 1, ease: "power4.out" },
-        "-=0.3",
-      )
-      .from(".hero-description", { opacity: 0, duration: 1 }, "-=0.5")
-      .from(".hero-btns", { scale: 0.9, opacity: 0, duration: 0.5 }, "-=0.5");
   }
 });
 
-// Staggered reveals for project items
-if (document.querySelector(".Ws")) {
-  gsap.from(".work-item", {
-    scrollTrigger: { trigger: ".Ws", start: "top 80%" },
-    y: 50,
-    opacity: 0,
-    stagger: 0.2,
-    duration: 1,
-    ease: "power3.out",
+// Cursor Interaction States
+const interactives = document.querySelectorAll(
+  "a, button, .story-card, .hamburger",
+);
+interactives.forEach((el) => {
+  el.addEventListener("mouseenter", () => {
+    if (cursor)
+      gsap.to(cursor, {
+        scale: 3.5,
+        backgroundColor: "rgba(212, 175, 55, 0.25)",
+      });
   });
-}
+  el.addEventListener("mouseleave", () => {
+    if (cursor) gsap.to(cursor, { scale: 1, backgroundColor: "#d4af37" });
+  });
+});
 
-// Global Reveal Class
+// 4. SCROLL ENGINE (GSAP REVEALS)
+gsap.registerPlugin(ScrollTrigger);
+
 gsap.utils.toArray(".reveal").forEach((elem) => {
   gsap.to(elem, {
     scrollTrigger: {
       trigger: elem,
-      start: "top 85%",
+      start: "top 88%",
       toggleActions: "play none none none",
     },
     opacity: 1,
     y: 0,
-    duration: 1,
-    ease: "power2.out",
+    duration: 1.4,
+    ease: "power3.out",
   });
 });
 
-// 6. NAVIGATION LOGIC
-const hamburger = document.getElementById("hamburger");
-const navLinks = document.getElementById("nav-links");
-if (hamburger && navLinks) {
-  hamburger.addEventListener("click", () => {
-    hamburger.classList.toggle("open");
-    navLinks.classList.toggle("mobile-active");
-    document.body.style.overflow = navLinks.classList.contains("mobile-active")
-      ? "hidden"
-      : "auto";
-    if (navLinks.classList.contains("mobile-active")) {
-      gsap.from(".nav-links a", {
-        x: 50,
-        opacity: 0,
-        stagger: 0.1,
-        duration: 0.5,
-        ease: "back.out(1.7)",
-      });
-    }
+// 5. STORY CARD INTERACTION
+const cards = document.querySelectorAll(".story-card");
+cards.forEach((card) => {
+  card.addEventListener("mouseenter", () => {
+    gsap.to(card, {
+      y: -15,
+      scale: 1.03,
+      borderColor: "#d4af37",
+      boxShadow:
+        "0 20px 50px rgba(0,0,0,0.7), 0 0 20px rgba(212, 175, 55, 0.15)",
+      duration: 0.4,
+    });
   });
+  card.addEventListener("mouseleave", () => {
+    gsap.to(card, {
+      y: 0,
+      scale: 1,
+      borderColor: "#1a1a1a",
+      boxShadow: "none",
+      duration: 0.4,
+    });
+  });
+});
+
+// 6. MARQUEE & MOBILE NAVIGATION
+const track = document.querySelector(".marquee-track");
+if (track) {
+  track.addEventListener(
+    "mouseenter",
+    () => (track.style.animationPlayState = "paused"),
+  );
+  track.addEventListener(
+    "mouseleave",
+    () => (track.style.animationPlayState = "running"),
+  );
 }
 
-// Window Resize Fix
+const hamburger = document.getElementById("hamburger");
+const navLinks = document.getElementById("nav-links");
+const links = document.querySelectorAll(".nav-links a");
+
+hamburger.addEventListener("click", () => {
+  const isOpening = !hamburger.classList.contains("active");
+
+  // Toggle Hamburger Animation
+  hamburger.classList.toggle("active");
+
+  // Toggle Menu Visibility
+  navLinks.classList.toggle("active");
+
+  if (isOpening) {
+    // Premium 3D Stagger Entrance
+    gsap.to(links, {
+      opacity: 1,
+      rotationX: 0,
+      z: 0,
+      duration: 0.8,
+      stagger: 0.1,
+      ease: "power4.out",
+      delay: 0.2,
+    });
+  } else {
+    // Smooth Exit
+    gsap.to(links, {
+      opacity: 0,
+      rotationX: -90,
+      z: -100,
+      duration: 0.4,
+      stagger: 0.05,
+      ease: "power2.in",
+    });
+  }
+});
+
+// Close menu when a link is clicked
+links.forEach((link) => {
+  link.addEventListener("click", () => {
+    hamburger.classList.remove("active");
+    navLinks.classList.remove("active");
+  });
+});
+
+// 7. RESPONSIVE RESIZE
 window.addEventListener("resize", () => {
   if (canvasContainer) {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   }
+});
+
+const backToTopBtn = document.getElementById("backToTop");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 600) {
+    backToTopBtn.classList.add("show");
+  } else {
+    backToTopBtn.classList.remove("show");
+  }
+});
+
+backToTopBtn.addEventListener("click", () => {
+  // 3D Press Effect: Make it look like it's being pushed into the screen
+  backToTopBtn.style.transform = "scale(0.9) translateZ(-10px)";
+
+  setTimeout(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, 100);
 });

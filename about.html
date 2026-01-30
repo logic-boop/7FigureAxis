@@ -10,6 +10,19 @@
       rel="stylesheet"
     />
     <style>
+      /* --- ADDED: BACKGROUND LOGO SYSTEM --- */
+      .hero-bg-logo {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 75%;
+        opacity: 0.1;
+        z-index: -1;
+        pointer-events: none;
+        filter: grayscale(1) brightness(0.4);
+      }
+
       .about-hero {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -71,28 +84,24 @@
       }
 
       @media (max-width: 768px) {
-        /* 1. About Hero Section */
         .about-hero {
           display: flex !important;
           flex-direction: column !important;
           gap: 40px !important;
         }
 
-        /* Resetting the Title Clamp for mobile */
         .about-hero h2 {
           font-size: clamp(2.2rem, 10vw, 3rem) !important;
           line-height: 1.1 !important;
         }
 
-        /* 2. The Philosophy Box (Fixing the 50px padding overflow) */
         .about-hero .reveal[style*="background: #111"] {
-          padding: 30px 20px !important; /* Reduces the hardcoded 50px padding */
+          padding: 30px 20px !important;
           margin: 0 !important;
           width: 100% !important;
           box-sizing: border-box;
         }
 
-        /* 3. Stat Box Fix */
         .stat-box {
           margin-top: 30px;
           text-align: center;
@@ -102,7 +111,6 @@
           font-size: 4rem !important;
         }
 
-        /* 4. Timeline Section */
         .timeline {
           display: flex !important;
           flex-direction: column !important;
@@ -112,7 +120,7 @@
 
         .timeline-item {
           padding: 20px;
-          border-left: 2px solid var(--accent-color); /* Premium vertical line look */
+          border-left: 2px solid var(--accent-color);
           background: rgba(255, 255, 255, 0.02);
         }
 
@@ -122,19 +130,128 @@
           margin-bottom: 10px;
         }
       }
+
+      /* Media Query */
+      @media (max-width: 768px) {
+        /* 1. About Hero Layout */
+        .about-hero {
+          display: flex;
+          flex-direction: column !important; /* Stack the text and philosophy box */
+          gap: 40px !important;
+        }
+
+        /* 2. Headline & Text Scaling */
+        .about-hero h2 {
+          font-size: 2.8rem !important;
+          line-height: 1 !important;
+        }
+
+        .about-hero p {
+          font-size: 1rem !important;
+          line-height: 1.6 !important;
+          margin-top: 20px !important;
+        }
+
+        /* 3. Stat Box Refinement */
+        .stat-box {
+          margin-top: 30px !important;
+          padding: 20px !important;
+          border-left: 2px solid var(--accent-color);
+          background: rgba(212, 175, 55, 0.05);
+          display: inline-block;
+        }
+
+        .stat-box .counter {
+          font-size: 3rem !important;
+        }
+
+        /* 4. Philosophy Card Optimization */
+        .about-hero div:nth-child(2) {
+          padding: 30px 20px !important; /* Tighter padding for mobile */
+        }
+
+        .about-hero h3 {
+          font-size: 1.2rem !important;
+          letter-spacing: 2px;
+        }
+
+        /* 5. Premium Timeline Roadmap */
+        .timeline {
+          display: flex;
+          flex-direction: column !important;
+          gap: 30px !important;
+          margin-top: 60px !important;
+          padding-left: 15px;
+          border-left: 1px solid #222; /* Vertical progress line */
+        }
+
+        .timeline-item {
+          position: relative;
+          padding-left: 25px;
+        }
+
+        /* The "Needful" Dot on the timeline */
+        .timeline-item::before {
+          content: "";
+          position: absolute;
+          left: -21px;
+          top: 5px;
+          width: 11px;
+          height: 11px;
+          background: var(--accent-color);
+          border-radius: 50%;
+          box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        .timeline-year {
+          font-size: 0.8rem !important;
+          color: var(--accent-color) !important;
+          margin-bottom: 8px !important;
+          display: block;
+          letter-spacing: 1px;
+        }
+      }
     </style>
   </head>
-  <body>
+  <body class="loading">
+    <div class="initial-load-overlay">
+      <h2
+        class="gold-gradient"
+        style="
+          font-size: 2.5rem;
+          font-weight: 900;
+          letter-spacing: 8px;
+          text-align: center;
+        "
+      >
+        7FIGURE AXIS
+      </h2>
+    </div>
+
+    <div class="hero-bg-logo">
+      <img
+        src="7FigureAxis-bglogo.png"
+        alt="7Figure Axis Background"
+        style="width: 100%"
+      />
+    </div>
+
     <div class="cursor"></div>
     <div id="canvas-container"></div>
 
     <nav class="navbar">
-      <div class="logo">7FIGURE AXIS</div>
+      <a href="index.html" class="logo-link">
+        <div class="logo">
+          <img
+            src="7FigureAxis-logo.png"
+            alt="7Figure Axis Logo"
+            class="nav-logo-img"
+          />
+        </div>
+      </a>
 
       <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </div>
 
       <div class="nav-links" id="nav-links">
@@ -218,7 +335,7 @@
 
       <div class="timeline reveal">
         <div class="timeline-item">
-          <span class="timeline-year">2020 - THE GENESIS</span>
+          <span class="timeline-year">2019 - THE GENESIS</span>
           <p style="color: var(--text-secondary)">
             Entered the dropshipping space. Deep-dived into Shopify development
             and niche research.
@@ -241,7 +358,6 @@
       </div>
     </section>
 
-    <!-- Footer Section -->
     <footer
       style="
         padding: 100px 10% 50px 10%;
@@ -252,18 +368,15 @@
     >
       <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 50px">
         <div class="reveal">
-          <h2
-            class="footer-brand"
-            style="
-              color: var(--accent-color);
-              font-weight: 900;
-              letter-spacing: 2px;
-              margin-bottom: 20px;
-              transition: 0.3s;
-            "
-          >
-            7FIGURE AXIS
-          </h2>
+          <a href="index.html" class="footer-logo-link">
+            <div class="footer-logo-container" style="margin-bottom: 20px">
+              <img
+                src="7FigureAxis-logo.png"
+                alt="7Figure Axis Logo"
+                style="height: 55px; width: auto"
+              />
+            </div>
+          </a>
           <p
             style="
               color: var(--text-secondary);
@@ -289,35 +402,31 @@
             NAVIGATION
           </h4>
           <ul style="list-style: none; padding: 0">
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="index.html"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >Home</a
               >
             </li>
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="about.html"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >The Story</a
               >
             </li>
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="services.html"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >Services</a
               >
             </li>
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="mentorship.html"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >Mentorship</a
               >
             </li>
@@ -336,27 +445,17 @@
             CONNECT
           </h4>
           <ul style="list-style: none; padding: 0">
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="https://wa.me/447536630605"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >WhatsApp</a
               >
             </li>
-            <li style="margin-bottom: 12px">
-              <a
-                href="https://discord.com/users/1206312152420323418"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
-                >Discord</a
-              >
-            </li>
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="mailto:7figureaxis@gmail.com"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >Email</a
               >
             </li>
@@ -374,44 +473,44 @@
           align-items: center;
           color: #333;
           font-size: 0.7rem;
-          letter-spacing: 1px;
         "
       >
         <p>&copy; 2026 7FIGURE AXIS. ALL RIGHTS RESERVED.</p>
-        <p>
-          DESIGNED BY
-          <span style="color: var(--text-secondary); text-transform: uppercase"
-            >Olubode A. James / Logic Tech Design & AI</span
-          >
-        </p>
+        <p>DESIGNED BY OLUBODE A. JAMES</p>
       </div>
     </footer>
+
+    <button id="backToTop" class="back-to-top">
+      <span class="arrow">↑</span>
+      <div class="progress-ring"></div>
+    </button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <script src="script.js"></script>
     <script>
-      // Number Counter Animation
+      // --- NEEDFUL: STAT COUNTER LOGIC ---
       const counters = document.querySelectorAll(".counter");
       counters.forEach((counter) => {
-        const updateCount = () => {
-          const target = +counter.getAttribute("data-target");
-          const count = +counter.innerText;
-          const speed = 200;
-          const inc = target / speed;
-
-          if (count < target) {
-            counter.innerText = Math.ceil(count + inc);
-            setTimeout(updateCount, 50);
-          } else {
-            counter.innerText = target;
-          }
-        };
-
+        const target = +counter.getAttribute("data-target");
         ScrollTrigger.create({
           trigger: counter,
-          onEnter: updateCount,
+          onEnter: () => {
+            let count = 0;
+            const updateCount = () => {
+              const speed = target / 50;
+              if (count < target) {
+                count++;
+                counter.innerText = count;
+                setTimeout(updateCount, 100);
+              } else {
+                counter.innerText = target;
+              }
+            };
+            updateCount();
+          },
         });
       });
     </script>

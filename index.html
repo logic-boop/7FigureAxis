@@ -10,17 +10,37 @@
       rel="stylesheet"
     />
   </head>
-  <body>
+  <body class="loading">
+    <div class="initial-load-overlay">
+      <h2
+        class="gold-gradient"
+        style="
+          font-size: 2.5rem;
+          font-weight: 900;
+          letter-spacing: 8px;
+          text-align: center;
+        "
+      >
+        7FIGURE AXIS
+      </h2>
+    </div>
+
     <div class="cursor"></div>
     <div id="canvas-container"></div>
 
     <nav class="navbar">
-      <div class="logo">7FIGURE AXIS</div>
+      <a href="index.html" class="logo-link">
+        <div class="logo">
+          <img
+            src="7FigureAxis-logo.png"
+            alt="7Figure Axis Logo"
+            class="nav-logo-img"
+          />
+        </div>
+      </a>
 
       <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </div>
 
       <div class="nav-links" id="nav-links">
@@ -33,12 +53,15 @@
     </nav>
 
     <header class="hero">
+      <div class="hero-bg-logo">
+        <img src="7FigureAxis-bglogo.png" alt="7Figure Axis Background" />
+      </div>
+
       <div class="hero-content">
         <p class="hero-tagline">6 YEARS OF E-COMMERCE MASTERY</p>
-        <h1 class="hero-title">
-          I BUILD SEVEN-FIGURE <br />
-          <span class="gold-gradient">SYSTEMS.</span>
-        </h1>
+        <h1 class="hero-title">I BUILD SEVEN-FIGURE</h1>
+        <h1 class="hero-title"><span class="gold-gradient">SYSTEMS.</span></h1>
+
         <p class="hero-description">
           From winning niches to high-converting Shopify stores. I help
           entrepreneurs scale to 6-figures monthly using the exact strategies I
@@ -56,18 +79,12 @@
     <section class="expert-bar reveal">
       <span class="expert-label">EXPERT IN:</span>
       <div class="expert-logos">
-        <span>SHOPIFY</span>
-        <span>META ADS</span>
-        <span>TIKTOK ADS</span>
-        <span>GOOGLE ADS</span>
+        <span>SHOPIFY</span><span>META ADS</span><span>TIKTOK ADS</span
+        ><span>GOOGLE ADS</span>
       </div>
     </section>
 
-    <!-- Success Stories -->
-    <section
-      class="success-stories-section reveal"
-      style="padding: var(--section-padding)"
-    >
+    <section class="success-stories-section reveal">
       <div style="text-align: center; margin-bottom: 60px">
         <h2
           style="
@@ -76,20 +93,8 @@
             font-weight: 900;
           "
         >
-          7-FIGURE <br />
-          <span class="gold-gradient">RESULTS.</span>
+          7-FIGURE <br /><span class="gold-gradient">RESULTS.</span>
         </h2>
-        <p
-          style="
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 20px auto 0 auto;
-            font-size: 1.1rem;
-          "
-        >
-          Real transformations, real revenue. See how our clients are dominating
-          the e-commerce landscape.
-        </p>
       </div>
 
       <div class="marquee-container">
@@ -97,7 +102,6 @@
           <div class="story-card">
             <img
               src="https://via.placeholder.com/150/d4af37/000000?text=CLIENT+1"
-              alt="Client Testimonial"
               class="client-avatar"
             />
             <p class="story-text">
@@ -111,7 +115,6 @@
           <div class="story-card">
             <img
               src="https://via.placeholder.com/150/d4af37/000000?text=CLIENT+2"
-              alt="Client Testimonial"
               class="client-avatar"
             />
             <p class="story-text">
@@ -120,44 +123,15 @@
             </p>
             <p class="story-client">
               - Sarah M. <span class="story-stat">$1.1M/year</span>
-            </p>
-          </div>
-          <div class="story-card">
-            <img
-              src="https://via.placeholder.com/150/d4af37/000000?text=CLIENT+3"
-              alt="Client Testimonial"
-              class="client-avatar"
-            />
-            <p class="story-text">
-              "From struggling to thriving. Best investment I've ever made."
-            </p>
-            <p class="story-client">
-              - James L. <span class="story-stat">$85,000/mo</span>
-            </p>
-          </div>
-          <div class="story-card">
-            <img
-              src="https://via.placeholder.com/150/d4af37/000000?text=CLIENT+4"
-              alt="Client Testimonial"
-              class="client-avatar"
-            />
-            <p class="story-text">
-              "The ad frameworks are truly next-level. ROAS is consistently
-              5x+."
-            </p>
-            <p class="story-client">
-              - Emily R. <span class="story-stat">$150,000/mo</span>
             </p>
           </div>
           <div class="story-card">
             <img
               src="https://via.placeholder.com/150/d4af37/000000?text=CLIENT+1"
-              alt="Client Testimonial"
               class="client-avatar"
             />
             <p class="story-text">
-              "Hit my first $100k month after just 6 weeks. The strategies are
-              insane."
+              "Hit my first $100k month after just 6 weeks."
             </p>
             <p class="story-client">
               - Alex P. <span class="story-stat">$120,000/mo</span>
@@ -166,49 +140,17 @@
           <div class="story-card">
             <img
               src="https://via.placeholder.com/150/d4af37/000000?text=CLIENT+2"
-              alt="Client Testimonial"
               class="client-avatar"
             />
-            <p class="story-text">
-              "Finally broke through to 7 figures. This mentorship changed
-              everything."
-            </p>
+            <p class="story-text">"Finally broke through to 7 figures."</p>
             <p class="story-client">
               - Sarah M. <span class="story-stat">$1.1M/year</span>
-            </p>
-          </div>
-          <div class="story-card">
-            <img
-              src="https://via.placeholder.com/150/d4af37/000000?text=CLIENT+3"
-              alt="Client Testimonial"
-              class="client-avatar"
-            />
-            <p class="story-text">
-              "From struggling to thriving. Best investment I've ever made."
-            </p>
-            <p class="story-client">
-              - James L. <span class="story-stat">$85,000/mo</span>
-            </p>
-          </div>
-          <div class="story-card">
-            <img
-              src="https://via.placeholder.com/150/d4af37/000000?text=CLIENT+4"
-              alt="Client Testimonial"
-              class="client-avatar"
-            />
-            <p class="story-text">
-              "The ad frameworks are truly next-level. ROAS is consistently
-              5x+."
-            </p>
-            <p class="story-client">
-              - Emily R. <span class="story-stat">$150,000/mo</span>
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Footer Section -->
     <footer
       style="
         padding: 100px 10% 50px 10%;
@@ -219,18 +161,15 @@
     >
       <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 50px">
         <div class="reveal">
-          <h2
-            class="footer-brand"
-            style="
-              color: var(--accent-color);
-              font-weight: 900;
-              letter-spacing: 2px;
-              margin-bottom: 20px;
-              transition: 0.3s;
-            "
-          >
-            7FIGURE AXIS
-          </h2>
+          <a href="index.html" class="footer-logo-link">
+            <div class="footer-logo-container" style="margin-bottom: 20px">
+              <img
+                src="7FigureAxis-logo.png"
+                alt="7Figure Axis Logo"
+                style="height: 55px; width: auto"
+              />
+            </div>
+          </a>
           <p
             style="
               color: var(--text-secondary);
@@ -256,35 +195,31 @@
             NAVIGATION
           </h4>
           <ul style="list-style: none; padding: 0">
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="index.html"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >Home</a
               >
             </li>
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="about.html"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >The Story</a
               >
             </li>
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="services.html"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >Services</a
               >
             </li>
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="mentorship.html"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >Mentorship</a
               >
             </li>
@@ -303,27 +238,17 @@
             CONNECT
           </h4>
           <ul style="list-style: none; padding: 0">
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="https://wa.me/447536630605"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >WhatsApp</a
               >
             </li>
-            <li style="margin-bottom: 12px">
-              <a
-                href="https://discord.com/users/1206312152420323418"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
-                >Discord</a
-              >
-            </li>
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="mailto:7figureaxis@gmail.com"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >Email</a
               >
             </li>
@@ -341,22 +266,22 @@
           align-items: center;
           color: #333;
           font-size: 0.7rem;
-          letter-spacing: 1px;
         "
       >
         <p>&copy; 2026 7FIGURE AXIS. ALL RIGHTS RESERVED.</p>
-        <p>
-          DESIGNED BY
-          <span style="color: var(--text-secondary); text-transform: uppercase"
-            >Olubode A. James / Logic Tech Design & AI</span
-          >
-        </p>
+        <p>DESIGNED BY OLUBODE A. JAMES</p>
       </div>
     </footer>
+
+    <button id="backToTop" class="back-to-top">
+      <span class="arrow">↑</span>
+      <div class="progress-ring"></div>
+    </button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <script src="script.js"></script>
   </body>
 </html>

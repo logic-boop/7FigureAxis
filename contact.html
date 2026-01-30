@@ -10,6 +10,19 @@
       rel="stylesheet"
     />
     <style>
+      /* --- ADDED: BACKGROUND LOGO SYSTEM --- */
+      .hero-bg-logo {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 75%;
+        opacity: 0.1;
+        z-index: -1;
+        pointer-events: none;
+        filter: grayscale(1) brightness(0.4);
+      }
+
       .contact-layout {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -86,7 +99,6 @@
       }
 
       @media (max-width: 768px) {
-        /* 1. Contact Hero Scaling */
         .contact-layout {
           display: flex !important;
           flex-direction: column !important;
@@ -99,7 +111,6 @@
           line-height: 1 !important;
         }
 
-        /* 2. Action Tiles (WhatsApp/Discord/Email) */
         .action-tiles {
           display: flex !important;
           flex-direction: column !important;
@@ -116,12 +127,11 @@
         }
 
         .tile h3 {
-          font-size: 0.7rem !important; /* Smaller label for mobile */
+          font-size: 0.7rem !important;
         }
 
-        /* 3. Form Container Reset */
         .form-container {
-          padding: 0 !important; /* Remove any desktop padding */
+          padding: 0 !important;
         }
 
         #contact-form {
@@ -130,7 +140,6 @@
           gap: 15px !important;
         }
 
-        /* FIX: Force the Name/Email grid to stack vertically */
         #contact-form div[style*="display: grid"] {
           grid-template-columns: 1fr !important;
           gap: 15px !important;
@@ -140,7 +149,7 @@
         textarea {
           width: 100% !important;
           padding: 15px !important;
-          font-size: 1rem !important; /* Prevents iOS auto-zoom on focus */
+          font-size: 1rem !important;
           background: #111 !important;
           border: 1px solid #222 !important;
           color: white;
@@ -155,48 +164,359 @@
       }
 
       @media (max-width: 768px) {
-        /* 1. Container Adjustment */
         div[style*="margin-top: 100px"][style*="overflow: hidden"] {
-          margin-top: 60px !important; /* Tighten space for mobile */
+          margin-top: 60px !important;
           padding: 30px 5% !important;
         }
 
-        /* 2. Heading scaling */
         div[style*="margin-top: 100px"] p {
-          letter-spacing: 3px !important; /* Reduce excessive spacing on small screens */
+          letter-spacing: 3px !important;
           font-size: 0.6rem !important;
           margin-bottom: 20px !important;
         }
 
-        /* 3. The Marquee Content Fix */
         .marquee-content {
           display: flex !important;
-          flex-wrap: wrap !important; /* Allows items to drop to next line if they don't fit */
+          flex-wrap: wrap !important;
           justify-content: center !important;
-          gap: 20px 30px !important; /* Vertical and Horizontal spacing between logos */
+          gap: 20px 30px !important;
           width: 100% !important;
         }
 
-        /* 4. Individual Logo Scaling */
         .marquee-content span {
-          font-size: 1.1rem !important; /* Scale down from 1.5rem to prevent crowding */
+          font-size: 1.1rem !important;
           letter-spacing: 1px;
-          flex: 0 1 auto; /* Ensures they only take up as much space as the text needs */
+          flex: 0 1 auto;
+        }
+      }
+      /* --- PREMIUM FAQ REDESIGN --- */
+      .faq-container {
+        max-width: 950px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .faq-item {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 2px;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .faq-item:hover {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(212, 175, 55, 0.3);
+      }
+
+      .faq-item.active {
+        background: rgba(212, 175, 55, 0.05);
+        border-color: var(--accent-color);
+      }
+
+      .faq-question {
+        width: 100%;
+        padding: 30px;
+        background: none;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        text-align: left;
+        outline: none;
+      }
+
+      .faq-question h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #fff;
+        margin: 0;
+        padding-right: 20px;
+        transition: color 0.3s ease;
+      }
+
+      .faq-item.active .faq-question h3 {
+        color: var(--accent-color);
+      }
+
+      .faq-icon {
+        font-size: 1.5rem;
+        color: var(--accent-color);
+        transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        font-weight: 300;
+        display: inline-block;
+      }
+
+      .faq-item.active .faq-icon {
+        transform: rotate(45deg);
+      }
+
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        padding: 0 30px;
+        transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+
+      .faq-item.active .faq-answer {
+        padding-bottom: 30px;
+        opacity: 1;
+      }
+
+      .faq-answer p {
+        color: var(--text-secondary);
+        line-height: 1.8;
+        font-size: 1rem;
+        margin: 0;
+        padding-top: 10px;
+        border-top: 1px solid rgba(212, 175, 55, 0.1);
+      }
+
+      .faq-item::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 2px;
+        height: 0;
+        background: var(--accent-color);
+        transition: height 0.4s ease;
+      }
+
+      .faq-item.active::before {
+        height: 100%;
+      }
+      @media (max-width: 768px) {
+        /* 1. Header Refinement */
+        .contact-section h2 {
+          font-size: 3rem !important;
+          line-height: 0.9 !important;
+        }
+
+        /* 2. Layout to Vertical Stack */
+        .contact-layout {
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 50px !important;
+          margin-top: 40px !important;
+        }
+
+        /* 3. Action Tiles (WhatsApp/Discord/Email) */
+        .action-tiles {
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 15px !important;
+        }
+
+        .tile {
+          padding: 25px !important;
+          background: #0c0c0c !important;
+          border: 1px solid #1a1a1a !important;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .tile h3 {
+          font-size: 0.7rem !important;
+          letter-spacing: 2px;
+        }
+
+        .tile p {
+          font-size: 1.2rem !important;
+          font-weight: 900;
+          color: #fff;
+        }
+
+        /* 4. Form Optimization */
+        .form-container {
+          padding: 30px 20px !important;
+          background: #080808 !important;
+          border: 1px solid #111 !important;
+        }
+
+        #contact-form div {
+          grid-template-columns: 1fr !important; /* Stack Name and Email */
+          gap: 15px !important;
+        }
+
+        input,
+        textarea {
+          padding: 18px !important; /* Larger touch area for mobile */
+          font-size: 1rem !important; /* Prevents iOS auto-zoom on focus */
+          background: #111 !important;
+          border: 1px solid #222 !important;
+          width: 100%;
+          margin-bottom: 15px;
+        }
+
+        .btn-primary {
+          padding: 20px 0 !important;
+          font-size: 0.9rem !important;
+          margin-top: 10px;
+        }
+      }
+      @media (max-width: 768px) {
+        /* 1. Header & Section Spacing */
+        .faq-section {
+          padding: 80px 5% !important;
+        }
+
+        .faq-section h2 {
+          font-size: 2.2rem !important; /* Scaled to fit mobile viewport */
+          margin-bottom: 10px !important;
+        }
+
+        .faq-section p {
+          font-size: 0.95rem !important;
+          line-height: 1.5;
+        }
+
+        /* 2. FAQ Container scaling */
+        .faq-container {
+          max-width: 100% !important;
+          margin-top: 40px !important;
+          border-top: 1px solid #1a1a1a;
+        }
+
+        /* 3. The Accordion "Button" Touch Area */
+        .faq-question {
+          padding: 22px 10px !important;
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start !important; /* Keeps icon at the top of long text */
+          text-align: left;
+          width: 100%;
+          background: transparent;
+          border: none;
+          gap: 15px;
+        }
+
+        .faq-question h3 {
+          font-size: 1.05rem !important;
+          line-height: 1.3 !important;
+          font-weight: 700;
+          color: var(--text-primary);
+        }
+
+        .faq-icon {
+          font-size: 1.4rem !important;
+          color: var(--accent-color);
+          transition: transform 0.4s ease;
+        }
+
+        /* 4. The Hidden Answer Scaling */
+        .faq-answer p {
+          font-size: 0.9rem !important;
+          line-height: 1.7 !important;
+          padding: 0 10px 25px 10px !important;
+          color: var(--text-secondary);
+        }
+
+        /* 5. Item Separation */
+        .faq-item {
+          border-bottom: 1px solid #1a1a1a !important;
+        }
+
+        /* Active State (for when JS toggles) */
+        .faq-item.active .faq-icon {
+          transform: rotate(45deg); /* Plus becomes an X-ish shape */
+          color: #fff;
+        }
+      }
+      @media (max-width: 768px) {
+        /* 1. Section Container Adjustment */
+        div[style*="margin-top: 100px"] {
+          margin-top: 60px !important; /* Reduce top gap for mobile flow */
+          padding: 30px 0 !important;
+        }
+
+        /* 2. Label Scaling */
+        div[style*="margin-top: 100px"] p {
+          font-size: 0.6rem !important;
+          letter-spacing: 3px !important;
+          margin-bottom: 20px !important;
+        }
+
+        /* 3. Converting to an Infinite Loop (Ticker Style) */
+        .marquee-content {
+          display: flex !important;
+          justify-content: flex-start !important; /* Align to start for animation */
+          width: max-content;
+          gap: 50px;
+          opacity: 0.2 !important; /* Subtler for mobile background feel */
+          animation: integrationTicker 15s linear infinite;
+        }
+
+        /* 4. Logo Typography */
+        .marquee-content span {
+          font-size: 1.1rem !important; /* Scaled down to prevent overwhelming the screen */
+          letter-spacing: 1px;
+          white-space: nowrap;
+        }
+
+        /* 5. Ticker Animation */
+        @keyframes integrationTicker {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(
+              -50%
+            ); /* Assumes we duplicate content in HTML for seamlessness */
+          }
         }
       }
     </style>
   </head>
-  <body>
+  <body class="loading">
+    <div class="initial-load-overlay">
+      <h2
+        class="gold-gradient"
+        style="
+          font-size: 2.5rem;
+          font-weight: 900;
+          letter-spacing: 8px;
+          text-align: center;
+        "
+      >
+        7FIGURE AXIS
+      </h2>
+    </div>
+
+    <div class="hero-bg-logo">
+      <img
+        src="7FigureAxis-bglogo.png"
+        alt="7Figure Axis Background"
+        style="width: 100%"
+      />
+    </div>
+
     <div class="cursor"></div>
     <div id="canvas-container"></div>
 
     <nav class="navbar">
-      <div class="logo">7FIGURE AXIS</div>
+      <a href="index.html" class="logo-link">
+        <div class="logo">
+          <img
+            src="7FigureAxis-logo.png"
+            alt="7Figure Axis Logo"
+            class="nav-logo-img"
+          />
+        </div>
+      </a>
 
       <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </div>
 
       <div class="nav-links" id="nav-links">
@@ -204,7 +524,7 @@
         <a href="about.html">The Story</a>
         <a href="services.html">Services</a>
         <a href="mentorship.html">Mentorship</a>
-        <a href="contact.html" class="nav-contact">Contact</a>
+        <a href="contact.html" class="active-link">Contact</a>
       </div>
     </nav>
 
@@ -250,7 +570,7 @@
             <span style="font-size: 2rem">→</span>
           </a>
 
-          <a href="mailto:Shopifyguru0927@gmail.com" class="tile">
+          <a href="mailto:7figureaxis@gmail.com" class="tile">
             <div>
               <h3>BUSINESS INQUIRIES</h3>
               <p>Email Guru</p>
@@ -287,7 +607,6 @@
       </div>
     </section>
 
-    <!-- FAQ Section -->
     <section class="faq-section reveal" style="padding: var(--section-padding)">
       <div style="text-align: center; margin-bottom: 60px">
         <h2
@@ -375,7 +694,6 @@
       </div>
     </section>
 
-    <!-- Marquee Section -->
     <div
       style="
         margin-top: 100px;
@@ -412,7 +730,6 @@
       </div>
     </div>
 
-    <!-- Footer Section -->
     <footer
       style="
         padding: 100px 10% 50px 10%;
@@ -423,18 +740,15 @@
     >
       <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 50px">
         <div class="reveal">
-          <h2
-            class="footer-brand"
-            style="
-              color: var(--accent-color);
-              font-weight: 900;
-              letter-spacing: 2px;
-              margin-bottom: 20px;
-              transition: 0.3s;
-            "
-          >
-            7FIGURE AXIS
-          </h2>
+          <a href="index.html" class="footer-logo-link">
+            <div class="footer-logo-container" style="margin-bottom: 20px">
+              <img
+                src="7FigureAxis-logo.png"
+                alt="7Figure Axis Logo"
+                style="height: 55px; width: auto"
+              />
+            </div>
+          </a>
           <p
             style="
               color: var(--text-secondary);
@@ -460,35 +774,31 @@
             NAVIGATION
           </h4>
           <ul style="list-style: none; padding: 0">
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="index.html"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >Home</a
               >
             </li>
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="about.html"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >The Story</a
               >
             </li>
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="services.html"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >Services</a
               >
             </li>
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="mentorship.html"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >Mentorship</a
               >
             </li>
@@ -507,27 +817,17 @@
             CONNECT
           </h4>
           <ul style="list-style: none; padding: 0">
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="https://wa.me/447536630605"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >WhatsApp</a
               >
             </li>
-            <li style="margin-bottom: 12px">
-              <a
-                href="https://discord.com/users/1206312152420323418"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
-                >Discord</a
-              >
-            </li>
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="mailto:7figureaxis@gmail.com"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >Email</a
               >
             </li>
@@ -545,22 +845,72 @@
           align-items: center;
           color: #333;
           font-size: 0.7rem;
-          letter-spacing: 1px;
         "
       >
         <p>&copy; 2026 7FIGURE AXIS. ALL RIGHTS RESERVED.</p>
-        <p>
-          DESIGNED BY
-          <span style="color: var(--text-secondary); text-transform: uppercase"
-            >Olubode A. James / Logic Tech Design & AI</span
-          >
-        </p>
+        <p>DESIGNED BY OLUBODE A. JAMES</p>
       </div>
     </footer>
+
+    <button id="backToTop" class="back-to-top">
+      <span class="arrow">↑</span>
+      <div class="progress-ring"></div>
+    </button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <script src="script.js"></script>
+    <script>
+      // --- NEEDFUL: FORM SUBMISSION INTERACTION ---
+      const contactForm = document.getElementById("contact-form");
+      contactForm.onsubmit = (e) => {
+        e.preventDefault();
+        const btn = contactForm.querySelector("button");
+        btn.innerText = "ENCRYPTING & SENDING...";
+        gsap.to(btn, { opacity: 0.5, duration: 0.5 });
+
+        // Simulate premium processing
+        setTimeout(() => {
+          btn.innerText = "MESSAGE SECURED ✓";
+          gsap.to(btn, {
+            backgroundColor: "#d4af37",
+            color: "#000",
+            opacity: 1,
+          });
+          contactForm.reset();
+        }, 2000);
+      };
+
+      // --- NEEDFUL: FAQ LOGIC ---
+      document.querySelectorAll(".faq-item").forEach((item) => {
+        const question = item.querySelector(".faq-question");
+        const answer = item.querySelector(".faq-answer");
+
+        question.addEventListener("click", () => {
+          const isActive = item.classList.contains("active");
+          document.querySelectorAll(".faq-item").forEach((otherItem) => {
+            otherItem.classList.remove("active");
+            gsap.to(otherItem.querySelector(".faq-answer"), {
+              maxHeight: 0,
+              opacity: 0,
+              duration: 0.5,
+              ease: "power4.inOut",
+            });
+          });
+
+          if (!isActive) {
+            item.classList.add("active");
+            gsap.to(answer, {
+              maxHeight: 500,
+              opacity: 1,
+              duration: 0.8,
+              ease: "power4.out",
+            });
+          }
+        });
+      });
+    </script>
   </body>
 </html>

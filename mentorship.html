@@ -10,6 +10,19 @@
       rel="stylesheet"
     />
     <style>
+      /* --- ADDED: BACKGROUND LOGO SYSTEM --- */
+      .hero-bg-logo {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 75%;
+        opacity: 0.1;
+        z-index: -1;
+        pointer-events: none;
+        filter: grayscale(1) brightness(0.4);
+      }
+
       /* Mentorship Specific Enhancements */
       .pricing-section {
         padding: var(--section-padding);
@@ -164,19 +177,342 @@
           list-style: none;
         }
       }
+      /* --- PREMIUM FAQ REDESIGN --- */
+      .faq-container {
+        max-width: 950px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .faq-item {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 2px; /* Matching your blocky premium aesthetic */
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .faq-item:hover {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(212, 175, 55, 0.3);
+      }
+
+      .faq-item.active {
+        background: rgba(212, 175, 55, 0.05);
+        border-color: var(--accent-color);
+      }
+
+      .faq-question {
+        width: 100%;
+        padding: 30px;
+        background: none;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        text-align: left;
+        outline: none;
+      }
+
+      .faq-question h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #fff;
+        margin: 0;
+        padding-right: 20px;
+        transition: color 0.3s ease;
+      }
+
+      .faq-item.active .faq-question h3 {
+        color: var(--accent-color);
+      }
+
+      .faq-icon {
+        font-size: 1.5rem;
+        color: var(--accent-color);
+        transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        font-weight: 300;
+        display: inline-block;
+      }
+
+      .faq-item.active .faq-icon {
+        transform: rotate(45deg); /* Turns the + into a clean X */
+      }
+
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        padding: 0 30px;
+        transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+
+      .faq-item.active .faq-answer {
+        padding-bottom: 30px;
+        opacity: 1;
+      }
+
+      .faq-answer p {
+        color: var(--text-secondary);
+        line-height: 1.8;
+        font-size: 1rem;
+        margin: 0;
+        padding-top: 10px;
+        border-top: 1px solid rgba(212, 175, 55, 0.1);
+      }
+
+      /* Hover glow for the active item */
+      .faq-item::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 2px;
+        height: 0;
+        background: var(--accent-color);
+        transition: height 0.4s ease;
+      }
+
+      .faq-item.active::before {
+        height: 100%;
+      }
+      @media (max-width: 768px) {
+        /* 1. Urgency Banner Scaling */
+        .pricing-section div[class*="reveal"]:first-child {
+          padding: 15px 10% !important;
+          margin-bottom: 35px !important;
+        }
+
+        .pricing-section div[class*="reveal"]:first-child p {
+          font-size: 0.7rem !important;
+          line-height: 1.4;
+          letter-spacing: 1px !important;
+        }
+
+        /* 2. Headline Scaling */
+        .pricing-section h2 {
+          font-size: 2.8rem !important;
+          text-align: center;
+          margin-bottom: 40px !important;
+        }
+
+        /* 3. Pricing Container & Cards */
+        .pricing-container {
+          display: flex !important;
+          flex-direction: column !important; /* Stack cards vertically */
+          gap: 30px !important;
+          padding: 0 5%;
+        }
+
+        .price-card {
+          width: 100% !important;
+          padding: 30px 20px !important;
+          background: #0a0a0a !important;
+          border: 1px solid #1a1a1a !important;
+        }
+
+        /* 4. Highlight the "Elite" Featured Card */
+        .price-card.featured {
+          border: 1px solid var(--accent-color) !important;
+          order: -1; /* Forces the Elite card to the TOP on mobile for max conversion */
+          transform: scale(1.02); /* Slight pop to show importance */
+          box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+        }
+
+        /* 5. List & Typography Refinement */
+        .price-card h3 {
+          font-size: 1.8rem !important;
+          margin-bottom: 15px !important;
+        }
+
+        .price-card ul {
+          margin-top: 25px !important;
+        }
+
+        .price-card ul li {
+          font-size: 0.9rem !important;
+          margin-bottom: 12px !important;
+          line-height: 1.4;
+        }
+
+        .price-card .btn-primary {
+          padding: 20px 0 !important;
+          font-size: 0.85rem !important;
+        }
+
+        /* 6. Elite Badge Adjustment */
+        .badge {
+          top: -12px !important;
+          right: 20px !important;
+          font-size: 0.65rem !important;
+          padding: 4px 12px !important;
+        }
+      }
+      @media (max-width: 768px) {
+        /* 1. Section & Heading Adjustment */
+        .success-stories-section {
+          padding: 60px 0 !important; /* Edge-to-edge for the marquee */
+        }
+
+        .success-stories-section h2 {
+          font-size: 2.2rem !important; /* Scaled for mobile impact */
+          margin-bottom: 15px !important;
+        }
+
+        .success-stories-section p {
+          font-size: 0.95rem !important;
+          padding: 0 10% !important; /* Keeps text from hitting screen edges */
+          line-height: 1.5;
+        }
+
+        /* 2. Marquee Optimization */
+        .marquee-container {
+          margin-top: 40px !important;
+          padding: 10px 0 !important;
+          mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 15%,
+            black 85%,
+            transparent
+          );
+          -webkit-mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 15%,
+            black 85%,
+            transparent
+          );
+        }
+
+        .marquee-track {
+          gap: 15px !important; /* Tighter gap for smaller screens */
+          animation-duration: 25s !important; /* Slower speed for the longer track */
+        }
+
+        /* 3. Card Refinement */
+        .story-card {
+          width: 260px !important; /* Narrower to fit the mobile viewport better */
+          padding: 20px !important;
+          background: #080808 !important; /* Slightly darker for depth */
+        }
+
+        .client-avatar {
+          width: 45px !important;
+          height: 45px !important;
+        }
+
+        .story-text {
+          font-size: 0.85rem !important;
+          line-height: 1.4 !important;
+        }
+
+        .story-client {
+          font-size: 0.75rem !important;
+        }
+
+        .story-stat {
+          font-size: 0.8rem !important;
+        }
+      }
+      @media (max-width: 768px) {
+        /* 1. Header Adjustment */
+        .faq-section {
+          padding: 80px 5% !important;
+        }
+
+        .faq-section h2 {
+          font-size: 2.2rem !important;
+          text-align: center;
+        }
+
+        /* 2. FAQ Container scaling */
+        .faq-container {
+          max-width: 100% !important;
+          margin-top: 40px !important;
+        }
+
+        /* 3. Question Button Refinement */
+        .faq-question {
+          padding: 20px 15px !important;
+          gap: 15px;
+          align-items: flex-start !important; /* Align icon to the top for long questions */
+        }
+
+        .faq-question h3 {
+          font-size: 1rem !important;
+          line-height: 1.4 !important;
+          text-align: left;
+          font-weight: 700;
+        }
+
+        .faq-icon {
+          font-size: 1.2rem !important;
+          color: var(--accent-color);
+        }
+
+        /* 4. Answer Scaling */
+        .faq-answer p {
+          font-size: 0.9rem !important;
+          line-height: 1.6 !important;
+          padding: 0 15px 25px 15px !important;
+          color: var(--text-secondary);
+        }
+
+        /* 5. Item Border Styling */
+        .faq-item {
+          border-bottom: 1px solid #1a1a1a !important;
+        }
+      }
     </style>
   </head>
-  <body>
+  <body class="loading">
+    <div class="initial-load-overlay">
+      <h2
+        class="gold-gradient"
+        style="
+          font-size: 2.5rem;
+          font-weight: 900;
+          letter-spacing: 8px;
+          text-align: center;
+        "
+      >
+        7FIGURE AXIS
+      </h2>
+    </div>
+
+    <div class="hero-bg-logo">
+      <img
+        src="7FigureAxis-bglogo.png"
+        alt="7Figure Axis Background"
+        style="width: 100%"
+      />
+    </div>
+
     <div class="cursor"></div>
     <div id="canvas-container"></div>
 
     <nav class="navbar">
-      <div class="logo">7FIGURE AXIS</div>
+      <a href="index.html" class="logo-link">
+        <div class="logo">
+          <img
+            src="7FigureAxis-logo.png"
+            alt="7Figure Axis Logo"
+            class="nav-logo-img"
+          />
+        </div>
+      </a>
 
       <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </div>
 
       <div class="nav-links" id="nav-links">
@@ -308,7 +644,6 @@
       </div>
     </section>
 
-    <!-- Success Stories -->
     <section
       class="success-stories-section reveal"
       style="padding: var(--section-padding)"
@@ -452,8 +787,7 @@
         </div>
       </div>
     </section>
-    
-    <!-- FAQ Section -->
+
     <section class="faq-section reveal" style="padding: var(--section-padding)">
       <div style="text-align: center; margin-bottom: 60px">
         <h2
@@ -541,7 +875,6 @@
       </div>
     </section>
 
-    <!-- Footer Section -->
     <footer
       style="
         padding: 100px 10% 50px 10%;
@@ -552,18 +885,15 @@
     >
       <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 50px">
         <div class="reveal">
-          <h2
-            class="footer-brand"
-            style="
-              color: var(--accent-color);
-              font-weight: 900;
-              letter-spacing: 2px;
-              margin-bottom: 20px;
-              transition: 0.3s;
-            "
-          >
-            7FIGURE AXIS
-          </h2>
+          <a href="index.html" class="footer-logo-link">
+            <div class="footer-logo-container" style="margin-bottom: 20px">
+              <img
+                src="7FigureAxis-logo.png"
+                alt="7Figure Axis Logo"
+                style="height: 55px; width: auto"
+              />
+            </div>
+          </a>
           <p
             style="
               color: var(--text-secondary);
@@ -589,35 +919,31 @@
             NAVIGATION
           </h4>
           <ul style="list-style: none; padding: 0">
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="index.html"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >Home</a
               >
             </li>
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="about.html"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >The Story</a
               >
             </li>
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="services.html"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >Services</a
               >
             </li>
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="mentorship.html"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >Mentorship</a
               >
             </li>
@@ -636,27 +962,17 @@
             CONNECT
           </h4>
           <ul style="list-style: none; padding: 0">
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="https://wa.me/447536630605"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >WhatsApp</a
               >
             </li>
-            <li style="margin-bottom: 12px">
-              <a
-                href="https://discord.com/users/1206312152420323418"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
-                >Discord</a
-              >
-            </li>
-            <li style="margin-bottom: 12px">
+            <li>
               <a
                 href="mailto:7figureaxis@gmail.com"
-                class="footer-link"
-                style="color: var(--text-secondary); font-size: 0.9rem"
+                style="color: var(--text-secondary); text-decoration: none"
                 >Email</a
               >
             </li>
@@ -674,34 +990,74 @@
           align-items: center;
           color: #333;
           font-size: 0.7rem;
-          letter-spacing: 1px;
         "
       >
         <p>&copy; 2026 7FIGURE AXIS. ALL RIGHTS RESERVED.</p>
-        <p>
-          DESIGNED BY
-          <span style="color: var(--text-secondary); text-transform: uppercase"
-            >Olubode A. James / Logic Tech Design & AI</span
-          >
-        </p>
+        <p>DESIGNED BY OLUBODE A. JAMES</p>
       </div>
     </footer>
+
+    <button id="backToTop" class="back-to-top">
+      <span class="arrow">↑</span>
+      <div class="progress-ring"></div>
+    </button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <script src="script.js"></script>
     <script>
-      // Special Mouse-Tracking Glow for Cards
+      // Glow Tracker
       const cards = document.querySelectorAll(".price-card");
       cards.forEach((card) => {
         card.onmousemove = (e) => {
           const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          card.style.setProperty("--x", `${x}px`);
-          card.style.setProperty("--y", `${y}px`);
+          card.style.setProperty("--x", `${e.clientX - rect.left}px`);
+          card.style.setProperty("--y", `${e.clientY - rect.top}px`);
         };
+      });
+
+      // Backend Ready Hooks
+      document.querySelectorAll(".btn-primary").forEach((btn) => {
+        btn.onclick = () => {
+          console.log(
+            `Backend Log: Mentorship Application started for ${btn.innerText}`,
+          );
+        };
+      });
+    </script>
+    <script>
+      // --- SMOOTH PREMIUM FAQ LOGIC ---
+      document.querySelectorAll(".faq-item").forEach((item) => {
+        const question = item.querySelector(".faq-question");
+        const answer = item.querySelector(".faq-answer");
+
+        question.addEventListener("click", () => {
+          const isActive = item.classList.contains("active");
+
+          // Close all other items for a clean experience
+          document.querySelectorAll(".faq-item").forEach((otherItem) => {
+            otherItem.classList.remove("active");
+            gsap.to(otherItem.querySelector(".faq-answer"), {
+              maxHeight: 0,
+              opacity: 0,
+              duration: 0.5,
+              ease: "power4.inOut",
+            });
+          });
+
+          // Toggle the clicked item
+          if (!isActive) {
+            item.classList.add("active");
+            gsap.to(answer, {
+              maxHeight: 500, // Sufficient height
+              opacity: 1,
+              duration: 0.8,
+              ease: "power4.out",
+            });
+          }
+        });
       });
     </script>
   </body>
