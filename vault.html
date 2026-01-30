@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>THE VAULT | 7Figure Axis Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  </head>
+
+  <body style="background: #000; color: #fff" class="loading">
+    <div class="initial-load-overlay">
+      <h2
+        class="gold-gradient"
+        style="
+          font-size: 2.5rem;
+          font-weight: 900;
+          letter-spacing: 8px;
+          text-align: center;
+        "
+      >
+        7FIGURE AXIS
+      </h2>
+    </div>
+
+    <div class="cursor"></div>
+    <div id="canvas-container"></div>
+
+    <nav class="navbar">
+      <a href="index.html" class="logo-link">
+        <div class="logo">
+          <img
+            src="7FigureAxis-logo.png"
+            alt="7Figure Axis Logo"
+            class="nav-logo-img"
+          />
+        </div>
+      </a>
+
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+
+      <div class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">The Story</a>
+        <a href="services.html">Services</a>
+        <a href="mentorship.html">Mentorship</a>
+        <a href="contact.html" class="nav-contact">Hire me</a>
+        <a href="vault.html" class="active-link">Results</a>
+      </div>
+    </nav>
+
+    <main style="padding-top: 120px">
+      <section style="padding: 0 5%; text-align: center; margin-bottom: 80px">
+        <h1
+          class="reveal"
+          style="
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            font-weight: 900;
+            line-height: 0.9;
+          "
+        >
+          THE <span class="gold-gradient">VAULT.</span>
+        </h1>
+        <p
+          class="reveal"
+          style="
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 20px auto;
+          "
+        >
+          A curated selection of 7-figure architectures and real-time revenue
+          proofs.
+        </p>
+      </section>
+
+      <section class="vault-showroom">
+        <h2 class="section-label">LIVE ARCHITECTURES</h2>
+
+        <div class="carousel-container">
+          <div class="carousel-track">
+            <a href="https://www.meowingtons.com/" class="store-card"
+              ><span>Meowingtons</span></a
+            >
+            <a href="https://www.lifestylebasics.store/" class="store-card"
+              ><span>Lifestyle Basics</span></a
+            >
+            <a href="https://gloweves.com/" class="store-card"
+              ><span>Gloweves</span></a
+            >
+            <a href="https://www.glownaturalwellness.com/" class="store-card"
+              ><span>Glow Natural</span></a
+            >
+            <a href="https://averraglow.com/" class="store-card"
+              ><span>Averra Glow</span></a
+            >
+            <a href="https://charmingcharlie.com/" class="store-card"
+              ><span>Charming Charlie</span></a
+            >
+            <a href="https://luxhart.com/" class="store-card"
+              ><span>Luxhart</span></a
+            >
+            <a href="https://shopsglam.com/" class="store-card"
+              ><span>Shop Sglam</span></a
+            >
+            <a href="https://wonderfold.com/" class="store-card"
+              ><span>Wonderfold</span></a
+            >
+            <a href="https://casaenliven.myshopify.com/" class="store-card"
+              ><span>Casa Enliven</span></a
+            >
+            <a href="https://zorahomes.myshopify.com/" class="store-card"
+              ><span>Zora Homes</span></a
+            >
+            <a href="https://edelraum.myshopify.com/" class="store-card"
+              ><span>Edelraum</span></a
+            >
+
+            <a href="https://www.meowingtons.com/" class="store-card"
+              ><span>Meowingtons</span></a
+            >
+            <a href="https://www.lifestylebasics.store/" class="store-card"
+              ><span>Lifestyle Basics</span></a
+            >
+            <a href="https://gloweves.com/" class="store-card"
+              ><span>Gloweves</span></a
+            >
+            <a href="https://www.glownaturalwellness.com/" class="store-card"
+              ><span>Glow Natural</span></a
+            >
+            <a href="https://averraglow.com/" class="store-card"
+              ><span>Averra Glow</span></a
+            >
+            <a href="https://charmingcharlie.com/" class="store-card"
+              ><span>Charming Charlie</span></a
+            >
+            <a href="https://luxhart.com/" class="store-card"
+              ><span>Luxhart</span></a
+            >
+            <a href="https://shopsglam.com/" class="store-card"
+              ><span>Shop Sglam</span></a
+            >
+            <a href="https://wonderfold.com/" class="store-card"
+              ><span>Wonderfold</span></a
+            >
+            <a href="https://casaenliven.myshopify.com/" class="store-card"
+              ><span>Casa Enliven</span></a
+            >
+            <a href="https://zorahomes.myshopify.com/" class="store-card"
+              ><span>Zora Homes</span></a
+            >
+            <a href="https://edelraum.myshopify.com/" class="store-card"
+              ><span>Edelraum</span></a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section class="proof-carousel-section">
+        <div class="filter-wrapper reveal">
+          <div class="filter-controls">
+            <button class="filter-btn active" data-filter="all">
+              ALL PROOFS
+            </button>
+            <button class="filter-btn" data-filter="personal">
+              PERSONAL ASSETS
+            </button>
+            <button class="filter-btn" data-filter="client">
+              CLIENT SUCCESS
+            </button>
+          </div>
+        </div>
+
+        <div class="carousel-viewport">
+          <div class="carousel-track" id="proofGrid">
+            <div class="proof-card personal">
+              <img src="proof1.png" alt="Revenue" />
+            </div>
+            <div class="proof-card personal">
+              <img src="proof2.png" alt="Revenue" />
+            </div>
+            <div class="proof-card personal">
+              <img src="proof3.png" alt="Revenue" />
+            </div>
+            <div class="proof-card personal">
+              <img src="proof4.png" alt="Revenue" />
+            </div>
+            <div class="proof-card personal">
+              <img src="proof5.png" alt="Revenue" />
+            </div>
+            <div class="proof-card personal">
+              <img src="proof6.png" alt="Revenue" />
+            </div>
+            <div class="proof-card personal">
+              <img src="proof7.png" alt="Revenue" />
+            </div>
+            <div class="proof-card personal">
+              <img src="proof8.png" alt="Revenue" />
+            </div>
+            <div class="proof-card personal">
+              <img src="proof9.png" alt="Revenue" />
+            </div>
+            <div class="proof-card personal">
+              <img src="proof10.png" alt="Revenue" />
+            </div>
+
+
+                <!-- for clients -->
+            <div class="proof-card client">
+              <img src="proof11.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof12.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof13.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof14.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof15.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof16.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof17.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof18.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof19.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof20.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof21.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof22.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof23.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof24.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof25.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof26.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof27.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof28.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof29.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof30.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof31.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof32.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof33.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof34.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof35.png" alt="Revenue" />
+            </div>
+            <div class="proof-card client">
+              <img src="proof36.png" alt="Revenue" />
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer
+      style="
+        padding: 100px 10% 50px 10%;
+        background: #000;
+        border-top: 1px solid #111;
+        margin-top: 100px;
+      "
+    >
+      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 50px">
+        <div class="reveal">
+          <a href="index.html" class="footer-logo-link">
+            <div class="footer-logo-container" style="margin-bottom: 20px">
+              <img
+                src="7FigureAxis-logo.png"
+                alt="7Figure Axis Logo"
+                style="height: 55px; width: auto"
+              />
+            </div>
+          </a>
+          <p
+            style="
+              color: var(--text-secondary);
+              max-width: 350px;
+              line-height: 1.8;
+            "
+          >
+            Mastering the architecture of e-commerce. From zero to seven
+            figures, we build the systems that define the future of
+            dropshipping.
+          </p>
+        </div>
+
+        <div class="reveal">
+          <h4
+            style="
+              margin-bottom: 25px;
+              font-size: 0.8rem;
+              letter-spacing: 2px;
+              color: #444;
+            "
+          >
+            NAVIGATION
+          </h4>
+          <ul style="list-style: none; padding: 0">
+            <li>
+              <a
+                href="index.html"
+                style="color: var(--text-secondary); text-decoration: none"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="about.html"
+                style="color: var(--text-secondary); text-decoration: none"
+                >The Story</a
+              >
+            </li>
+            <li>
+              <a
+                href="services.html"
+                style="color: var(--text-secondary); text-decoration: none"
+                >Services</a
+              >
+            </li>
+            <li>
+              <a
+                href="mentorship.html"
+                style="color: var(--text-secondary); text-decoration: none"
+                >Mentorship</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="reveal">
+          <h4
+            style="
+              margin-bottom: 25px;
+              font-size: 0.8rem;
+              letter-spacing: 2px;
+              color: #444;
+            "
+          >
+            CONNECT
+          </h4>
+          <ul style="list-style: none; padding: 0">
+            <li>
+              <a
+                href="https://wa.me/447536630605"
+                style="color: var(--text-secondary); text-decoration: none"
+                >WhatsApp</a
+              >
+            </li>
+            <li>
+              <a
+                href="mailto:7figureaxis@gmail.com"
+                style="color: var(--text-secondary); text-decoration: none"
+                >Email</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div
+        style="
+          margin-top: 80px;
+          padding-top: 30px;
+          border-top: 1px solid #111;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          color: #333;
+          font-size: 0.7rem;
+        "
+      >
+        <p>&copy; 2026 7FIGURE AXIS. ALL RIGHTS RESERVED.</p>
+        <p>DESIGNED BY OLUBODE A. JAMES</p>
+      </div>
+    </footer>
+
+    <button id="backToTop" class="back-to-top">
+      <span class="arrow">↑</span>
+      <div class="progress-ring"></div>
+    </button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script src="script.js"></script>
+
+    <script src="vault-script.js"></script>
+  </body>
+</html>
