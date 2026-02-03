@@ -10,7 +10,7 @@
       rel="stylesheet"
     />
     <style>
-      /* --- ADDED: BACKGROUND LOGO SYSTEM --- */
+      /* --- BACKGROUND LOGO SYSTEM --- */
       .hero-bg-logo {
         position: fixed;
         top: 50%;
@@ -91,105 +91,7 @@
         outline: none;
       }
 
-      @media (max-width: 992px) {
-        .contact-layout {
-          grid-template-columns: 1fr;
-          gap: 50px;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .contact-layout {
-          display: flex !important;
-          flex-direction: column !important;
-          gap: 50px !important;
-          margin-top: 40px;
-        }
-
-        .reveal h2 {
-          font-size: clamp(2.5rem, 12vw, 4rem) !important;
-          line-height: 1 !important;
-        }
-
-        .action-tiles {
-          display: flex !important;
-          flex-direction: column !important;
-          gap: 15px !important;
-        }
-
-        .tile {
-          padding: 25px !important;
-          display: flex !important;
-          justify-content: space-between;
-          align-items: center;
-          width: 100% !important;
-          box-sizing: border-box;
-        }
-
-        .tile h3 {
-          font-size: 0.7rem !important;
-        }
-
-        .form-container {
-          padding: 0 !important;
-        }
-
-        #contact-form {
-          display: flex !important;
-          flex-direction: column !important;
-          gap: 15px !important;
-        }
-
-        #contact-form div[style*="display: grid"] {
-          grid-template-columns: 1fr !important;
-          gap: 15px !important;
-        }
-
-        input,
-        textarea {
-          width: 100% !important;
-          padding: 15px !important;
-          font-size: 1rem !important;
-          background: #111 !important;
-          border: 1px solid #222 !important;
-          color: white;
-          border-radius: 4px;
-          box-sizing: border-box;
-        }
-
-        button.btn-primary {
-          padding: 20px !important;
-          margin-top: 10px;
-        }
-      }
-
-      @media (max-width: 768px) {
-        div[style*="margin-top: 100px"][style*="overflow: hidden"] {
-          margin-top: 60px !important;
-          padding: 30px 5% !important;
-        }
-
-        div[style*="margin-top: 100px"] p {
-          letter-spacing: 3px !important;
-          font-size: 0.6rem !important;
-          margin-bottom: 20px !important;
-        }
-
-        .marquee-content {
-          display: flex !important;
-          flex-wrap: wrap !important;
-          justify-content: center !important;
-          gap: 20px 30px !important;
-          width: 100% !important;
-        }
-
-        .marquee-content span {
-          font-size: 1.1rem !important;
-          letter-spacing: 1px;
-          flex: 0 1 auto;
-        }
-      }
-      /* --- PREMIUM FAQ REDESIGN --- */
+      /* --- FAQ REDESIGN --- */
       .faq-container {
         max-width: 950px;
         margin: 0 auto;
@@ -207,11 +109,6 @@
         transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         position: relative;
         overflow: hidden;
-      }
-
-      .faq-item:hover {
-        background: rgba(255, 255, 255, 0.04);
-        border-color: rgba(212, 175, 55, 0.3);
       }
 
       .faq-item.active {
@@ -239,20 +136,12 @@
         letter-spacing: 1px;
         color: #fff;
         margin: 0;
-        padding-right: 20px;
-        transition: color 0.3s ease;
-      }
-
-      .faq-item.active .faq-question h3 {
-        color: var(--accent-color);
       }
 
       .faq-icon {
         font-size: 1.5rem;
         color: var(--accent-color);
         transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-        font-weight: 300;
-        display: inline-block;
       }
 
       .faq-item.active .faq-icon {
@@ -272,208 +161,17 @@
         opacity: 1;
       }
 
-      .faq-answer p {
-        color: var(--text-secondary);
-        line-height: 1.8;
-        font-size: 1rem;
-        margin: 0;
-        padding-top: 10px;
-        border-top: 1px solid rgba(212, 175, 55, 0.1);
-      }
-
-      .faq-item::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 2px;
-        height: 0;
-        background: var(--accent-color);
-        transition: height 0.4s ease;
-      }
-
-      .faq-item.active::before {
-        height: 100%;
-      }
       @media (max-width: 768px) {
-        /* 1. Header Refinement */
-        .contact-section h2 {
-          font-size: 3rem !important;
-          line-height: 0.9 !important;
-        }
-
-        /* 2. Layout to Vertical Stack */
         .contact-layout {
-          display: flex !important;
-          flex-direction: column !important;
-          gap: 50px !important;
-          margin-top: 40px !important;
-        }
-
-        /* 3. Action Tiles (WhatsApp/Discord/Email) */
-        .action-tiles {
-          display: flex !important;
-          flex-direction: column !important;
-          gap: 15px !important;
-        }
-
-        .tile {
-          padding: 25px !important;
-          background: #0c0c0c !important;
-          border: 1px solid #1a1a1a !important;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .tile h3 {
-          font-size: 0.7rem !important;
-          letter-spacing: 2px;
-        }
-
-        .tile p {
-          font-size: 1.2rem !important;
-          font-weight: 900;
-          color: #fff;
-        }
-
-        /* 4. Form Optimization */
-        .form-container {
-          padding: 30px 20px !important;
-          background: #080808 !important;
-          border: 1px solid #111 !important;
-        }
-
-        #contact-form div {
-          grid-template-columns: 1fr !important; /* Stack Name and Email */
-          gap: 15px !important;
-        }
-
-        input,
-        textarea {
-          padding: 18px !important; /* Larger touch area for mobile */
-          font-size: 1rem !important; /* Prevents iOS auto-zoom on focus */
-          background: #111 !important;
-          border: 1px solid #222 !important;
-          width: 100%;
-          margin-bottom: 15px;
-        }
-
-        .btn-primary {
-          padding: 20px 0 !important;
-          font-size: 0.9rem !important;
-          margin-top: 10px;
-        }
-      }
-      @media (max-width: 768px) {
-        /* 1. Header & Section Spacing */
-        .faq-section {
-          padding: 80px 5% !important;
-        }
-
-        .faq-section h2 {
-          font-size: 2.2rem !important; /* Scaled to fit mobile viewport */
-          margin-bottom: 10px !important;
-        }
-
-        .faq-section p {
-          font-size: 0.95rem !important;
-          line-height: 1.5;
-        }
-
-        /* 2. FAQ Container scaling */
-        .faq-container {
-          max-width: 100% !important;
-          margin-top: 40px !important;
-          border-top: 1px solid #1a1a1a;
-        }
-
-        /* 3. The Accordion "Button" Touch Area */
-        .faq-question {
-          padding: 22px 10px !important;
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start !important; /* Keeps icon at the top of long text */
-          text-align: left;
-          width: 100%;
-          background: transparent;
-          border: none;
-          gap: 15px;
-        }
-
-        .faq-question h3 {
-          font-size: 1.05rem !important;
-          line-height: 1.3 !important;
-          font-weight: 700;
-          color: var(--text-primary);
-        }
-
-        .faq-icon {
-          font-size: 1.4rem !important;
-          color: var(--accent-color);
-          transition: transform 0.4s ease;
-        }
-
-        /* 4. The Hidden Answer Scaling */
-        .faq-answer p {
-          font-size: 0.9rem !important;
-          line-height: 1.7 !important;
-          padding: 0 10px 25px 10px !important;
-          color: var(--text-secondary);
-        }
-
-        /* 5. Item Separation */
-        .faq-item {
-          border-bottom: 1px solid #1a1a1a !important;
-        }
-
-        /* Active State (for when JS toggles) */
-        .faq-item.active .faq-icon {
-          transform: rotate(45deg); /* Plus becomes an X-ish shape */
-          color: #fff;
-        }
-      }
-      @media (max-width: 768px) {
-        /* 1. Section Container Adjustment */
-        div[style*="margin-top: 100px"] {
-          margin-top: 60px !important; /* Reduce top gap for mobile flow */
-          padding: 30px 0 !important;
-        }
-
-        /* 2. Label Scaling */
-        div[style*="margin-top: 100px"] p {
-          font-size: 0.6rem !important;
-          letter-spacing: 3px !important;
-          margin-bottom: 20px !important;
-        }
-
-        /* 3. Converting to an Infinite Loop (Ticker Style) */
-        .marquee-content {
-          display: flex !important;
-          justify-content: flex-start !important; /* Align to start for animation */
-          width: max-content;
+          grid-template-columns: 1fr;
           gap: 50px;
-          opacity: 0.2 !important; /* Subtler for mobile background feel */
-          animation: integrationTicker 15s linear infinite;
+          margin-top: 40px;
         }
-
-        /* 4. Logo Typography */
+        .form-container {
+          padding: 30px 20px;
+        }
         .marquee-content span {
-          font-size: 1.1rem !important; /* Scaled down to prevent overwhelming the screen */
-          letter-spacing: 1px;
-          white-space: nowrap;
-        }
-
-        /* 5. Ticker Animation */
-        @keyframes integrationTicker {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(
-              -50%
-            ); /* Assumes we duplicate content in HTML for seamlessness */
-          }
+          font-size: 1.1rem;
         }
       }
     </style>
@@ -514,11 +212,9 @@
           />
         </div>
       </a>
-
       <div class="hamburger" id="hamburger">
         <span></span><span></span><span></span>
       </div>
-
       <div class="nav-links" id="nav-links">
         <a href="index.html">Home</a>
         <a href="about.html">The Story</a>
@@ -538,8 +234,7 @@
             font-weight: 900;
           "
         >
-          INITIATE <br />
-          <span class="gold-gradient">CONTACT.</span>
+          INITIATE <br /><span class="gold-gradient">CONTACT.</span>
         </h2>
         <p
           style="
@@ -562,7 +257,6 @@
             </div>
             <span style="font-size: 2rem">→</span>
           </a>
-
           <a href="https://discord.com/users/1206312152420323418" class="tile">
             <div>
               <h3>COMMUNITY ACCESS</h3>
@@ -570,7 +264,6 @@
             </div>
             <span style="font-size: 2rem">→</span>
           </a>
-
           <a href="mailto:7figureaxis@gmail.com" class="tile">
             <div>
               <h3>BUSINESS INQUIRIES</h3>
@@ -585,16 +278,24 @@
             <div
               style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px"
             >
-              <input type="text" placeholder="Full Name" required />
-              <input type="email" placeholder="Email Address" required />
+              <input type="text" name="name" placeholder="Full Name" required />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                required
+              />
             </div>
             <input
               type="text"
+              name="subject"
               placeholder="Subject (Mentorship / Services / Other)"
             />
             <textarea
+              name="message"
               rows="6"
               placeholder="Tell me about your current revenue and your goals..."
+              required
             ></textarea>
             <button
               type="submit"
@@ -617,18 +318,10 @@
             font-weight: 900;
           "
         >
-          QUESTIONS? <br />
-          <span class="gold-gradient">ANSWERS.</span>
+          QUESTIONS? <br /><span class="gold-gradient">ANSWERS.</span>
         </h2>
-        <p
-          style="
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 20px auto 0 auto;
-            font-size: 1.1rem;
-          "
-        >
-          Got more inquiries? We've got you covered.
+        <p style="color: var(--text-secondary); margin-top: 15px">
+          Everything you need to know before joining the 7Figure Axis.
         </p>
       </div>
 
@@ -640,96 +333,83 @@
           </button>
           <div class="faq-answer">
             <p>
-              Absolutely. While our strategies are advanced, our Accelerator
-              program is designed to guide aspiring entrepreneurs from the
-              ground up, providing a clear roadmap to their first $10k+ month.
+              Absolutely. While our strategies are elite-level, the system is
+              architected to take you from absolute zero to profit. We don't
+              assume you have prior knowledge. We provide the roadmap, the
+              product research frameworks, and the scaling systems needed to
+              bypass the "guessing phase" that keeps most beginners stuck for
+              years.
             </p>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-question">
-            <h3>
-              What kind of financial commitment is required to start
-              dropshipping?
-            </h3>
+            <h3>What kind of budget do I need to see real results?</h3>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
             <p>
-              The financial commitment can vary, but we guide you on optimizing
-              your ad spend and sourcing to maximize ROI. We'll help you
-              structure a budget that scales with your growth.
+              Efficiency is at the core of the Axis system. While "big money"
+              helps scale, we focus on high-ROI testing. We recommend starting
+              with a lean budget for testing products and only "pouring
+              gasoline" on winners. We teach you how to utilize organic traffic
+              and high-conversion ad sets so you aren't wasting capital on
+              unprofitable campaigns.
             </p>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-question">
-            <h3>How long does it typically take to see results?</h3>
+            <h3>How much time do I need to commit daily?</h3>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
             <p>
-              While results vary, many of our Accelerator clients see their
-              first profitable sales within weeks, with significant milestones
-              achieved within 2-3 months by following our proven systems.
+              This is a business, not a lottery. To see 7-figure results, we
+              recommend at least 2-3 focused hours per day. Our mentorship
+              focuses on "High-Leverage Tasks"—meaning we show you how to stop
+              "playing" with your website design and start focusing on the 20%
+              of actions that generate 80% of your revenue.
             </p>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-question">
-            <h3>Do you offer a refund policy?</h3>
+            <h3>Do you provide the products, or do I find them?</h3>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
             <p>
-              Due to the proprietary nature and immediate value of our
-              strategies and direct mentorship, all sales are final. We are
-              committed to your success and provide ongoing support to ensure
-              you achieve your goals.
+              Give a man a fish, he eats for a day; teach him the 7Figure Axis
+              research method, and he builds an empire. We provide winning
+              product lists and "hot" niches, but more importantly, we give you
+              our proprietary research tools and criteria so you can identify
+              "evergreen" winners before they go viral on TikTok or Meta.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <h3>What makes this different from other "Gurus"?</h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>
+              Most programs sell outdated 2018 strategies. 7Figure Axis is built
+              on 2026 data and current market psychology. We aren't just
+              teaching dropshipping; we are teaching Brand Architecture. We
+              focus on backend systems, customer LTV (Lifetime Value), and
+              high-level conversion rate optimization (CRO) that turns one-time
+              shoppers into repeat customers.
             </p>
           </div>
         </div>
       </div>
     </section>
-
-    <div
-      style="
-        margin-top: 100px;
-        overflow: hidden;
-        padding: 40px 0;
-        border-top: 1px solid #111;
-      "
-    >
-      <p
-        style="
-          text-align: center;
-          color: #444;
-          font-size: 0.7rem;
-          letter-spacing: 5px;
-          margin-bottom: 30px;
-        "
-      >
-        INTEGRATED WITH
-      </p>
-      <div
-        class="marquee-content"
-        style="
-          display: flex;
-          justify-content: space-around;
-          opacity: 0.3;
-          filter: grayscale(1);
-        "
-      >
-        <span style="font-weight: 900; font-size: 1.5rem">SHOPIFY</span>
-        <span style="font-weight: 900; font-size: 1.5rem">STRIPE</span>
-        <span style="font-weight: 900; font-size: 1.5rem">KLAVIYO</span>
-        <span style="font-weight: 900; font-size: 1.5rem">META</span>
-        <span style="font-weight: 900; font-size: 1.5rem">TIKTOK</span>
-      </div>
-    </div>
 
     <footer
       style="
@@ -853,63 +533,64 @@
       </div>
     </footer>
 
-    <button id="backToTop" class="back-to-top">
-      <span class="arrow">↑</span>
-      <div class="progress-ring"></div>
-    </button>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
     <script src="script.js"></script>
+
     <script>
-      // --- NEEDFUL: FORM SUBMISSION INTERACTION ---
       const contactForm = document.getElementById("contact-form");
-      contactForm.onsubmit = (e) => {
+
+      contactForm.onsubmit = async (e) => {
         e.preventDefault();
         const btn = contactForm.querySelector("button");
+
+        // UI Feedback
         btn.innerText = "ENCRYPTING & SENDING...";
+        btn.disabled = true;
         gsap.to(btn, { opacity: 0.5, duration: 0.5 });
 
-        // Simulate premium processing
-        setTimeout(() => {
-          btn.innerText = "MESSAGE SECURED ✓";
-          gsap.to(btn, {
-            backgroundColor: "#d4af37",
-            color: "#000",
-            opacity: 1,
+        const formData = new FormData(contactForm);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+          const response = await fetch("/api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
           });
-          contactForm.reset();
-        }, 2000);
+
+          if (response.ok) {
+            btn.innerText = "MESSAGE SECURED ✓";
+            gsap.to(btn, {
+              backgroundColor: "#d4af37",
+              color: "#000",
+              opacity: 1,
+            });
+            contactForm.reset();
+          } else {
+            throw new Error("Submission failed");
+          }
+        } catch (error) {
+          btn.innerText = "ERROR: TRY AGAIN";
+          btn.disabled = false;
+          gsap.to(btn, { backgroundColor: "#ff4444", opacity: 1 });
+        }
       };
 
-      // --- NEEDFUL: FAQ LOGIC ---
+      // FAQ logic
       document.querySelectorAll(".faq-item").forEach((item) => {
         const question = item.querySelector(".faq-question");
         const answer = item.querySelector(".faq-answer");
-
         question.addEventListener("click", () => {
           const isActive = item.classList.contains("active");
-          document.querySelectorAll(".faq-item").forEach((otherItem) => {
-            otherItem.classList.remove("active");
-            gsap.to(otherItem.querySelector(".faq-answer"), {
-              maxHeight: 0,
-              opacity: 0,
-              duration: 0.5,
-              ease: "power4.inOut",
-            });
+          item.classList.toggle("active");
+          gsap.to(answer, {
+            maxHeight: isActive ? 0 : 500,
+            opacity: isActive ? 0 : 1,
+            duration: 0.6,
+            ease: "power4.out",
           });
-
-          if (!isActive) {
-            item.classList.add("active");
-            gsap.to(answer, {
-              maxHeight: 500,
-              opacity: 1,
-              duration: 0.8,
-              ease: "power4.out",
-            });
-          }
         });
       });
     </script>

@@ -459,6 +459,43 @@ body.loaded {
   }
 }
 
+#canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Sits behind everything */
+  background: #000; /* Dark void */
+}
+
+body {
+  background: transparent; /* Allows Three.js to show through */
+}
+
+.hero,
+.success-stories-section,
+footer {
+  background: transparent !important; /* Remove solid blacks */
+}
+
+/* Add a subtle dark gradient to ensure text remains readable */
+section {
+  position: relative;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.4),
+    transparent,
+    rgba(0, 0, 0, 0.4)
+  ) !important;
+}
+
+/* Remove the background logo image that was blocking the view */
+.hero-bg-logo {
+  opacity: 0.15; /* Make it very faint so the 3D particles dominate */
+  pointer-events: none;
+}
+
 /* MOBILE ADAPTATION */
 @media (max-width: 768px) {
   .nav-logo-img {
@@ -976,6 +1013,7 @@ body.loaded {
   width: 100%;
   overflow: hidden;
   position: relative;
+  /* Premium Edge Fade */
   mask-image: linear-gradient(
     to right,
     transparent,
@@ -988,52 +1026,66 @@ body.loaded {
 .carousel-track {
   display: flex;
   gap: 20px;
-  padding: 20px;
+  padding: 40px 20px;
   width: max-content;
   cursor: grab;
+  transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .proof-card {
-  width: 280px;
+  width: 320px;
   flex-shrink: 0;
-  border-radius: 12px;
+  border-radius: 15px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  background: #111;
-  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  background: rgba(20, 20, 20, 0.4); /* Glass effect */
+  backdrop-filter: blur(10px);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .proof-card img {
   width: 100%;
   height: auto;
   display: block;
-  filter: brightness(0.8);
+  filter: brightness(0.7) contrast(1.1);
+  transition: 0.5s;
 }
 
 .proof-card:hover {
-  transform: scale(1.05) translateY(-10px);
+  transform: scale(1.08) translateY(-15px) rotateZ(1deg);
   border-color: var(--accent-color);
+  box-shadow: 0 20px 50px rgba(212, 175, 55, 0.15);
   z-index: 10;
 }
 
 .proof-card:hover img {
-  filter: brightness(1.1);
+  filter: brightness(1.1) contrast(1.1);
 }
 
-/* Responsive Logic */
+/* RESPONSIVE OPTIMIZATION */
 @media (max-width: 768px) {
   .carousel-viewport {
-    mask-image: none; /* Full clarity on mobile */
+    mask-image: none;
     overflow-x: auto;
-    padding-bottom: 20px;
+    padding-bottom: 30px;
+    -webkit-overflow-scrolling: touch;
   }
 
   .proof-card {
-    width: 220px;
+    width: 260px; /* Bigger on mobile for legibility */
+  }
+
+  .filter-controls {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 10px;
+    scrollbar-width: none;
   }
 
   .filter-btn {
-    padding: 8px 15px;
-    font-size: 0.6rem;
+    padding: 8px 18px;
+    font-size: 0.65rem;
+    white-space: nowrap;
   }
 }

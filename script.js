@@ -1,23 +1,15 @@
 /**
- * 7FIGURE AXIS - ELITE PERFORMANCE SCRIPT
+ * 7FIGURE AXIS - MULTIVERSE & VAULT MASTER SCRIPT
  * Finalized Version for Olubode A. James
  */
 
-// 1. ENTRANCE ANIMATION & PRELOADER FAILSAFE
+// 1. ENTRANCE & PAGE INITIALIZATION
 window.addEventListener("load", () => {
-  // Ensure the page starts at the top for the best entrance effect
   window.scrollTo(0, 0);
-
   const overlay = document.querySelector(".initial-load-overlay");
-
-  // High-performance trigger for the CSS opacity transition
   document.body.classList.add("loaded");
+  const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
-  const tl = gsap.timeline({
-    defaults: { ease: "power4.out" },
-  });
-
-  // PRELOADER LOGIC: Checks if overlay exists to prevent script crashes
   if (overlay) {
     tl.to(overlay, {
       opacity: 0,
@@ -29,156 +21,215 @@ window.addEventListener("load", () => {
       },
     });
   } else {
-    // Failsafe: If HTML is missing the overlay, just unlock the scroll
     document.body.style.overflow = "auto";
-    tl.set({}, { delay: 0.1 });
   }
 
-  // ELITE ENTRANCE SEQUENCE (The "Ease Motion" reveal)
-  tl.from(
-    ".navbar",
-    {
-      y: -100,
-      opacity: 0,
-      duration: 1.2,
-    },
-    "-=0.6",
-  )
-    .from(
-      ".hero-bg-logo",
-      {
-        scale: 0.6,
-        opacity: 0,
-        duration: 2,
-        ease: "power2.out",
-      },
-      "-=1",
-    )
+  // Hero Entrance
+  tl.from(".navbar", { y: -100, opacity: 0, duration: 1.2 }, "-=0.6")
     .from(
       ".hero-title",
-      {
-        y: 80,
-        opacity: 0,
-        stagger: 0.15,
-        duration: 1.5,
-      },
+      { y: 80, opacity: 0, stagger: 0.15, duration: 1.5 },
       "-=1.4",
     )
-    .from(
-      ".hero-description",
-      {
-        opacity: 1,
-        y: 30,
-        duration: 1,
-      },
-      "-=1",
-    )
-    .from(
-      ".hero-btns",
-      {
-        scale: 0.9,
-        opacity: 0,
-        duration: 0.8,
-      },
-      "-=0.8",
-    );
+    .from(".hero-description", { opacity: 0, y: 30, duration: 1 }, "-=1")
+    .from(".hero-btns", { scale: 0.9, opacity: 0, duration: 0.8 }, "-=0.8");
 });
 
-// 2. THREE.JS 3D BACKGROUND (THE GOLDEN AXIS)
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000,
-);
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-const canvasContainer = document.getElementById("canvas-container");
+// 2. THREE.JS 3D MULTIVERSE (PLANETS, SATELLITES, PULSE)
+const container = document.querySelector("#canvas-container");
+if (container) {
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000,
+  );
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
-if (canvasContainer) {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  canvasContainer.appendChild(renderer.domElement);
+  container.appendChild(renderer.domElement);
 
-  // High-detail Torus Knot for a premium mathematical feel
-  const geometry = new THREE.TorusKnotGeometry(12, 3.5, 180, 20);
-  const material = new THREE.MeshBasicMaterial({
-    color: 0xd4af37, // Brand Gold
+  // --- MULTIVERSE STARFIELD ---
+  const particlesGeometry = new THREE.BufferGeometry();
+  const count = 7000;
+  const posArray = new Float32Array(count * 3);
+  for (let i = 0; i < count * 3; i++) {
+    posArray[i] = (Math.random() - 0.5) * 30;
+  }
+  particlesGeometry.setAttribute(
+    "position",
+    new THREE.BufferAttribute(posArray, 3),
+  );
+  const particlesMaterial = new THREE.PointsMaterial({
+    size: 0.005,
+    color: "#D4AF37",
+    transparent: true,
+    opacity: 0.5,
+    blending: THREE.AdditiveBlending,
+  });
+  const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+  scene.add(particlesMesh);
+
+  // --- MASTER 7-FIGURE PLANET (BREATHING) ---
+  const mainPlanetGeom = new THREE.IcosahedronGeometry(1.8, 4);
+  const mainPlanetMat = new THREE.MeshBasicMaterial({
+    color: "#D4AF37",
     wireframe: true,
     transparent: true,
-    opacity: 0.12,
+    opacity: 0.15,
+  });
+  const masterPlanet = new THREE.Mesh(mainPlanetGeom, mainPlanetMat);
+  masterPlanet.position.set(0, 1, -4);
+  scene.add(masterPlanet);
+
+  // --- SATELLITE SYSTEM ---
+  const satellites = [];
+  for (let i = 0; i < 3; i++) {
+    const satGeom = new THREE.BoxGeometry(0.05, 0.05, 0.05);
+    const satMat = new THREE.MeshBasicMaterial({
+      color: "#ffffff",
+      wireframe: true,
+    });
+    const sat = new THREE.Mesh(satGeom, satMat);
+    sat.userData = {
+      orbit: 2.5,
+      speed: 0.01 + i * 0.005,
+      angle: Math.random() * Math.PI,
+    };
+    satellites.push(sat);
+    scene.add(sat);
+  }
+
+  // --- THE 9 PLANETS ---
+  const planets = [];
+  const planetSizes = [0.4, 0.15, 0.2, 0.22, 0.5, 0.45, 0.3, 0.25, 0.1];
+  for (let i = 0; i < 9; i++) {
+    const geometry = new THREE.IcosahedronGeometry(planetSizes[i], 2);
+    const material = new THREE.MeshBasicMaterial({
+      color: "#D4AF37",
+      wireframe: true,
+      transparent: true,
+      opacity: 0.3,
+    });
+    const planet = new THREE.Mesh(geometry, material);
+    planet.userData = {
+      distance: Math.random() * 6 + 4,
+      speed: Math.random() * 0.004 + 0.001,
+      angle: Math.random() * Math.PI * 2,
+    };
+    planets.push(planet);
+    scene.add(planet);
+  }
+
+  camera.position.z = 5;
+  let mouseX = 0,
+    mouseY = 0;
+  window.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX / window.innerWidth - 0.5;
+    mouseY = e.clientY / window.innerHeight - 0.5;
   });
 
-  const torusKnot = new THREE.Mesh(geometry, material);
-  scene.add(torusKnot);
-  camera.position.z = 30;
+  let time = 0;
+  const animate = () => {
+    requestAnimationFrame(animate);
+    time += 0.01;
 
-  function animate3D() {
-    requestAnimationFrame(animate3D);
-    const scrollY = window.scrollY;
+    // 1. Breathing Pulse Logic
+    const pulse = 1 + Math.sin(time * 0.5) * 0.1;
+    masterPlanet.scale.set(pulse, pulse, pulse);
+    masterPlanet.rotation.y += 0.002;
 
-    // Dynamic rotation that responds to user scrolling
-    torusKnot.rotation.x += 0.002 + scrollY * 0.00005;
-    torusKnot.rotation.y += 0.001 + scrollY * 0.00005;
+    // 2. Satellite Orbits
+    satellites.forEach((s) => {
+      s.userData.angle += s.userData.speed;
+      s.position.x =
+        masterPlanet.position.x + Math.cos(s.userData.angle) * s.userData.orbit;
+      s.position.z =
+        masterPlanet.position.z + Math.sin(s.userData.angle) * s.userData.orbit;
+      s.rotation.x += 0.02;
+    });
 
+    // 3. Planet Orbits
+    planets.forEach((p) => {
+      p.userData.angle += p.userData.speed;
+      p.position.x = Math.cos(p.userData.angle) * p.userData.distance;
+      p.position.z = Math.sin(p.userData.angle) * p.userData.distance - 3;
+    });
+
+    // 4. Parallax
+    camera.position.x += (mouseX * 2 - camera.position.x) * 0.05;
+    camera.position.y += (-mouseY * 2 - camera.position.y) * 0.05;
+    camera.lookAt(scene.position);
     renderer.render(scene, camera);
-  }
-  animate3D();
+  };
+  animate();
 }
 
-// 3. CURSOR & LOGO PARALLAX PHYSICS
-const hero = document.querySelector(".hero");
-const bgLogo = document.querySelector(".hero-bg-logo");
-const cursor = document.querySelector(".cursor");
+// 3. VAULT FILTERING LOGIC (The "Result Page" Fix)
+document.addEventListener("DOMContentLoaded", () => {
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  const items = document.querySelectorAll(".proof-card");
 
-document.addEventListener("mousemove", (e) => {
-  const { clientX, clientY } = e;
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      filterButtons.forEach((btn) => btn.classList.remove("active"));
+      button.classList.add("active");
+      const filterValue = button.getAttribute("data-filter");
 
-  // Custom Cursor movement
-  if (cursor) {
-    gsap.to(cursor, {
-      x: clientX,
-      y: clientY,
-      duration: 0.2,
-      ease: "power2.out",
+      gsap.to(items, {
+        duration: 0.3,
+        scale: 0.8,
+        opacity: 0,
+        ease: "power2.in",
+        onComplete: () => {
+          items.forEach((item) => {
+            if (filterValue === "all" || item.classList.contains(filterValue)) {
+              item.style.display = "block";
+              gsap.to(item, {
+                duration: 0.6,
+                scale: 1,
+                opacity: 1,
+                ease: "back.out(1.7)",
+              });
+            } else {
+              item.style.display = "none";
+            }
+          });
+        },
+      });
     });
-  }
-
-  // 3D Background Logo Tilt
-  if (hero && bgLogo) {
-    const xPos = (clientX / window.innerWidth - 0.5) * 35;
-    const yPos = (clientY / window.innerHeight - 0.5) * 35;
-
-    gsap.to(bgLogo, {
-      rotationY: xPos,
-      rotationX: -yPos,
-      transformPerspective: 1200,
-      duration: 1.8,
-      ease: "power3.out",
-    });
-  }
+  });
 });
 
-// Cursor Interaction States
+// 4. UI INTERACTIONS (CURSOR & NAVIGATION)
+const cursor = document.querySelector(".cursor");
+document.addEventListener("mousemove", (e) => {
+  if (cursor) gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.2 });
+});
+
 const interactives = document.querySelectorAll(
-  "a, button, .story-card, .hamburger",
+  "a, button, .story-card, .hamburger, .proof-card",
 );
 interactives.forEach((el) => {
-  el.addEventListener("mouseenter", () => {
-    if (cursor)
+  el.addEventListener(
+    "mouseenter",
+    () =>
+      cursor &&
       gsap.to(cursor, {
         scale: 3.5,
-        backgroundColor: "rgba(212, 175, 55, 0.25)",
-      });
-  });
-  el.addEventListener("mouseleave", () => {
-    if (cursor) gsap.to(cursor, { scale: 1, backgroundColor: "#d4af37" });
-  });
+        backgroundColor: "rgba(212, 175, 55, 0.2)",
+      }),
+  );
+  el.addEventListener(
+    "mouseleave",
+    () => cursor && gsap.to(cursor, { scale: 1, backgroundColor: "#d4af37" }),
+  );
 });
 
-// 4. SCROLL ENGINE (GSAP REVEALS)
+// Scroll Reveal
 gsap.registerPlugin(ScrollTrigger);
-
 gsap.utils.toArray(".reveal").forEach((elem) => {
   gsap.to(elem, {
     scrollTrigger: {
@@ -193,115 +244,21 @@ gsap.utils.toArray(".reveal").forEach((elem) => {
   });
 });
 
-// 5. STORY CARD INTERACTION
-const cards = document.querySelectorAll(".story-card");
-cards.forEach((card) => {
-  card.addEventListener("mouseenter", () => {
-    gsap.to(card, {
-      y: -15,
-      scale: 1.03,
-      borderColor: "#d4af37",
-      boxShadow:
-        "0 20px 50px rgba(0,0,0,0.7), 0 0 20px rgba(212, 175, 55, 0.15)",
-      duration: 0.4,
-    });
-  });
-  card.addEventListener("mouseleave", () => {
-    gsap.to(card, {
-      y: 0,
-      scale: 1,
-      borderColor: "#1a1a1a",
-      boxShadow: "none",
-      duration: 0.4,
-    });
-  });
-});
-
-// 6. MARQUEE & MOBILE NAVIGATION
-const track = document.querySelector(".marquee-track");
-if (track) {
-  track.addEventListener(
-    "mouseenter",
-    () => (track.style.animationPlayState = "paused"),
-  );
-  track.addEventListener(
-    "mouseleave",
-    () => (track.style.animationPlayState = "running"),
-  );
-}
-
+// Mobile Nav
 const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("nav-links");
-const links = document.querySelectorAll(".nav-links a");
-
 hamburger.addEventListener("click", () => {
-  const isOpening = !hamburger.classList.contains("active");
-
-  // Toggle Hamburger Animation
   hamburger.classList.toggle("active");
-
-  // Toggle Menu Visibility
   navLinks.classList.toggle("active");
-
-  if (isOpening) {
-    // Premium 3D Stagger Entrance
-    gsap.to(links, {
-      opacity: 1,
-      rotationX: 0,
-      z: 0,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: "power4.out",
-      delay: 0.2,
-    });
-  } else {
-    // Smooth Exit
-    gsap.to(links, {
-      opacity: 0,
-      rotationX: -90,
-      z: -100,
-      duration: 0.4,
-      stagger: 0.05,
-      ease: "power2.in",
-    });
-  }
 });
 
-// Close menu when a link is clicked
-links.forEach((link) => {
-  link.addEventListener("click", () => {
-    hamburger.classList.remove("active");
-    navLinks.classList.remove("active");
-  });
-});
-
-// 7. RESPONSIVE RESIZE
-window.addEventListener("resize", () => {
-  if (canvasContainer) {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  }
-});
-
+// Back to Top
 const backToTopBtn = document.getElementById("backToTop");
-
 window.addEventListener("scroll", () => {
-  if (window.scrollY > 600) {
-    backToTopBtn.classList.add("show");
-  } else {
-    backToTopBtn.classList.remove("show");
-  }
+  window.scrollY > 600
+    ? backToTopBtn.classList.add("show")
+    : backToTopBtn.classList.remove("show");
 });
-
-backToTopBtn.addEventListener("click", () => {
-  // 3D Press Effect: Make it look like it's being pushed into the screen
-  backToTopBtn.style.transform = "scale(0.9) translateZ(-10px)";
-
-  setTimeout(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, 100);
-});
+backToTopBtn.addEventListener("click", () =>
+  window.scrollTo({ top: 0, behavior: "smooth" }),
+);
