@@ -24,7 +24,6 @@ window.addEventListener("load", () => {
     document.body.style.overflow = "auto";
   }
 
-  // Hero Entrance
   tl.from(".navbar", { y: -100, opacity: 0, duration: 1.2 }, "-=0.6")
     .from(
       ".hero-title",
@@ -35,7 +34,7 @@ window.addEventListener("load", () => {
     .from(".hero-btns", { scale: 0.9, opacity: 0, duration: 0.8 }, "-=0.8");
 });
 
-// 2. THREE.JS 3D MULTIVERSE (PLANETS, SATELLITES, PULSE)
+// 2. THREE.JS 3D MULTIVERSE (Kept as provided)
 const container = document.querySelector("#canvas-container");
 if (container) {
   const scene = new THREE.Scene();
@@ -46,18 +45,14 @@ if (container) {
     1000,
   );
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
 
-  // --- MULTIVERSE STARFIELD ---
   const particlesGeometry = new THREE.BufferGeometry();
   const count = 7000;
   const posArray = new Float32Array(count * 3);
-  for (let i = 0; i < count * 3; i++) {
-    posArray[i] = (Math.random() - 0.5) * 30;
-  }
+  for (let i = 0; i < count * 3; i++) posArray[i] = (Math.random() - 0.5) * 30;
   particlesGeometry.setAttribute(
     "position",
     new THREE.BufferAttribute(posArray, 3),
@@ -72,7 +67,6 @@ if (container) {
   const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
   scene.add(particlesMesh);
 
-  // --- MASTER 7-FIGURE PLANET (BREATHING) ---
   const mainPlanetGeom = new THREE.IcosahedronGeometry(1.8, 4);
   const mainPlanetMat = new THREE.MeshBasicMaterial({
     color: "#D4AF37",
@@ -84,7 +78,6 @@ if (container) {
   masterPlanet.position.set(0, 1, -4);
   scene.add(masterPlanet);
 
-  // --- SATELLITE SYSTEM ---
   const satellites = [];
   for (let i = 0; i < 3; i++) {
     const satGeom = new THREE.BoxGeometry(0.05, 0.05, 0.05);
@@ -102,7 +95,6 @@ if (container) {
     scene.add(sat);
   }
 
-  // --- THE 9 PLANETS ---
   const planets = [];
   const planetSizes = [0.4, 0.15, 0.2, 0.22, 0.5, 0.45, 0.3, 0.25, 0.1];
   for (let i = 0; i < 9; i++) {
@@ -135,13 +127,9 @@ if (container) {
   const animate = () => {
     requestAnimationFrame(animate);
     time += 0.01;
-
-    // 1. Breathing Pulse Logic
     const pulse = 1 + Math.sin(time * 0.5) * 0.1;
     masterPlanet.scale.set(pulse, pulse, pulse);
     masterPlanet.rotation.y += 0.002;
-
-    // 2. Satellite Orbits
     satellites.forEach((s) => {
       s.userData.angle += s.userData.speed;
       s.position.x =
@@ -150,15 +138,11 @@ if (container) {
         masterPlanet.position.z + Math.sin(s.userData.angle) * s.userData.orbit;
       s.rotation.x += 0.02;
     });
-
-    // 3. Planet Orbits
     planets.forEach((p) => {
       p.userData.angle += p.userData.speed;
       p.position.x = Math.cos(p.userData.angle) * p.userData.distance;
       p.position.z = Math.sin(p.userData.angle) * p.userData.distance - 3;
     });
-
-    // 4. Parallax
     camera.position.x += (mouseX * 2 - camera.position.x) * 0.05;
     camera.position.y += (-mouseY * 2 - camera.position.y) * 0.05;
     camera.lookAt(scene.position);
@@ -167,17 +151,15 @@ if (container) {
   animate();
 }
 
-// 3. VAULT FILTERING LOGIC (The "Result Page" Fix)
+// 3. VAULT FILTERING LOGIC
 document.addEventListener("DOMContentLoaded", () => {
   const filterButtons = document.querySelectorAll(".filter-btn");
   const items = document.querySelectorAll(".proof-card");
-
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
       filterButtons.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
       const filterValue = button.getAttribute("data-filter");
-
       gsap.to(items, {
         duration: 0.3,
         scale: 0.8,
@@ -210,7 +192,7 @@ document.addEventListener("mousemove", (e) => {
 });
 
 const interactives = document.querySelectorAll(
-  "a, button, .story-card, .hamburger, .proof-card",
+  "a, button, .story-card, .hamburger, .proof-card, .faq-question",
 );
 interactives.forEach((el) => {
   el.addEventListener(
@@ -244,21 +226,54 @@ gsap.utils.toArray(".reveal").forEach((elem) => {
   });
 });
 
-// Mobile Nav
+// MOBILE NAVIGATION - UPDATED WITH GSAP
 const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("nav-links");
-hamburger.addEventListener("click", () => {
-  hamburger.classList.toggle("active");
-  navLinks.classList.toggle("active");
-});
+const links = document.querySelectorAll(".nav-links a");
+
+if (hamburger && navLinks) {
+  hamburger.addEventListener("click", () => {
+    const isOpen = navLinks.classList.contains("active");
+
+    // Toggle Classes
+    hamburger.classList.toggle("active");
+    navLinks.classList.toggle("active");
+
+    // Premium Link Animation
+    if (!isOpen) {
+      gsap.fromTo(
+        links,
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.1,
+          duration: 0.6,
+          ease: "power4.out",
+          delay: 0.3,
+        },
+      );
+    }
+  });
+
+  // Close menu when a link is clicked
+  links.forEach((link) => {
+    link.addEventListener("click", () => {
+      hamburger.classList.remove("active");
+      navLinks.classList.remove("active");
+    });
+  });
+}
 
 // Back to Top
 const backToTopBtn = document.getElementById("backToTop");
-window.addEventListener("scroll", () => {
-  window.scrollY > 600
-    ? backToTopBtn.classList.add("show")
-    : backToTopBtn.classList.remove("show");
-});
-backToTopBtn.addEventListener("click", () =>
-  window.scrollTo({ top: 0, behavior: "smooth" }),
-);
+if (backToTopBtn) {
+  window.addEventListener("scroll", () => {
+    window.scrollY > 600
+      ? backToTopBtn.classList.add("show")
+      : backToTopBtn.classList.remove("show");
+  });
+  backToTopBtn.addEventListener("click", () =>
+    window.scrollTo({ top: 0, behavior: "smooth" }),
+  );
+}

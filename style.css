@@ -513,13 +513,13 @@ section {
   } /* Hamburger JS handles this */
 }
 
-/* --- HAMBURGER TO X-MARK --- */
+/* --- HAMBURGER SYSTEM --- */
 .hamburger {
   display: none; /* Hidden on desktop */
   flex-direction: column;
   gap: 6px;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 2100; /* Stays above the menu */
   padding: 10px;
 }
 
@@ -529,54 +529,68 @@ section {
   height: 2px;
   background: var(--accent-color);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transform-origin: center;
 }
 
-/* X-Mark State */
-.hamburger.active span:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
-}
-
-.hamburger.active span:nth-child(2) {
-  opacity: 0;
-  transform: translateX(20px);
-}
-
-.hamburger.active span:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
-}
-
+/* --- MOBILE NAVIGATION --- */
 @media (max-width: 768px) {
   .hamburger {
     display: flex;
   }
 
+  /* Hamburger to X Animation */
+  .hamburger.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  .hamburger.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
   .nav-links {
     position: fixed;
     top: 0;
-    right: -100%;
+    right: -100%; /* Hidden off-screen */
     width: 100%;
     height: 100vh;
     background: rgba(5, 5, 5, 0.98);
-    backdrop-filter: blur(20px);
-    display: flex;
+    backdrop-filter: blur(25px);
+    display: flex !important; /* Overriding desktop 'none' */
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: right 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-    z-index: 999;
-    perspective: 1000px; /* 3D perspective */
+    transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: 1999;
   }
 
   .nav-links.active {
-    right: 0;
+    right: 0; /* Slide into view */
   }
 
   .nav-links a {
-    margin: 15px 0;
+    margin: 20px 0;
     font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: 5px;
     opacity: 0;
-    transform: translateZ(-100px) rotateX(-90deg); /* 3D Starting Position */
+    transform: translateY(20px);
+    transition: 0.4s;
+  }
+
+  /* When menu is active, animate links */
+  .nav-links.active a {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .nav-logo-img {
+    height: 60px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 12vw, 4rem) !important;
   }
 }
 
