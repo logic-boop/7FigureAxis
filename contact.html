@@ -539,51 +539,76 @@
     <script src="script.js"></script>
 
     <script>
-      const contactForm = document.getElementById("contact-form");
+      // 1. Identify the form - use a unique variable name to avoid "already declared" errors
+      const axisContactForm = document.getElementById("contact-form");
 
-      contactForm.onsubmit = async (e) => {
-        e.preventDefault();
-        const btn = contactForm.querySelector("button");
+      if (axisContactForm) {
+        axisContactForm.onsubmit = async (e) => {
+          // 2. IMMEDIATELY stop the page from refreshing
+          e.preventDefault();
 
-        // UI Feedback
-        btn.innerText = "ENCRYPTING & SENDING...";
-        btn.disabled = true;
-        gsap.to(btn, { opacity: 0.5, duration: 0.5 });
+          const btn = axisContactForm.querySelector("button");
 
-        const formData = new FormData(contactForm);
-        const data = Object.fromEntries(formData.entries());
+          // UI Feedback
+          btn.innerText = "ENCRYPTING & SENDING...";
+          btn.disabled = true;
+          gsap.to(btn, { opacity: 0.5, duration: 0.5 });
 
-        try {
-          const response = await fetch("/api/contact", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-          });
+          const formData = new FormData(axisContactForm);
+          const data = Object.fromEntries(formData.entries());
 
-          if (response.ok) {
-            btn.innerText = "MESSAGE SECURED ✓";
-            gsap.to(btn, {
-              backgroundColor: "#d4af37",
-              color: "#000",
-              opacity: 1,
+          try {
+            // 3. Send to your Vercel API
+            const response = await fetch("/api/contact", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
             });
-            contactForm.reset();
-          } else {
-            throw new Error("Submission failed");
-          }
-        } catch (error) {
-          btn.innerText = "ERROR: TRY AGAIN";
-          btn.disabled = false;
-          gsap.to(btn, { backgroundColor: "#ff4444", opacity: 1 });
-        }
-      };
 
-      // FAQ logic
+            if (response.ok) {
+              btn.innerText = "MESSAGE SECURED ✓";
+              gsap.to(btn, {
+                backgroundColor: "#d4af37",
+                color: "#000",
+                opacity: 1,
+              });
+              axisContactForm.reset();
+
+              // Optional: Redirect to success page
+              setTimeout(() => {
+                window.location.href = "thank-you.html";
+              }, 1500);
+            } else {
+              throw new Error("Submission failed");
+            }
+          } catch (error) {
+            console.error("Submission Error:", error);
+            btn.innerText = "ERROR: TRY AGAIN";
+            btn.disabled = false;
+            gsap.to(btn, { backgroundColor: "#ff4444", opacity: 1 });
+          }
+        };
+      }
+
+      // 4. Premium FAQ Accordion Logic
       document.querySelectorAll(".faq-item").forEach((item) => {
         const question = item.querySelector(".faq-question");
         const answer = item.querySelector(".faq-answer");
+
         question.addEventListener("click", () => {
           const isActive = item.classList.contains("active");
+
+          // Close other open items for a cleaner look
+          document.querySelectorAll(".faq-item").forEach((other) => {
+            if (other !== item) {
+              other.classList.remove("active");
+              gsap.to(other.querySelector(".faq-answer"), {
+                maxHeight: 0,
+                opacity: 0,
+              });
+            }
+          });
+
           item.classList.toggle("active");
           gsap.to(answer, {
             maxHeight: isActive ? 0 : 500,

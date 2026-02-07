@@ -7,3 +7,5 @@ dist/
 .idea/
 /build/
 *.tmp
+.vercel
+.env*.local

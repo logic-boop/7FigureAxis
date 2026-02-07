@@ -1,6 +1,7 @@
 /**
  * 7FIGURE AXIS - MULTIVERSE & VAULT MASTER SCRIPT
  * Finalized Version for Olubode A. James
+ * Fixed: Conditional Hero Animations & Live Form Handling
  */
 
 // 1. ENTRANCE & PAGE INITIALIZATION
@@ -24,17 +25,22 @@ window.addEventListener("load", () => {
     document.body.style.overflow = "auto";
   }
 
-  tl.from(".navbar", { y: -100, opacity: 0, duration: 1.2 }, "-=0.6")
-    .from(
+  // Navbar always animates
+  tl.from(".navbar", { y: -100, opacity: 0, duration: 1.2 }, "-=0.6");
+
+  // Only run hero animations if the elements exist (Home Page)
+  if (document.querySelector(".hero-title")) {
+    tl.from(
       ".hero-title",
       { y: 80, opacity: 0, stagger: 0.15, duration: 1.5 },
       "-=1.4",
     )
-    .from(".hero-description", { opacity: 0, y: 30, duration: 1 }, "-=1")
-    .from(".hero-btns", { scale: 0.9, opacity: 0, duration: 0.8 }, "-=0.8");
+      .from(".hero-description", { opacity: 0, y: 30, duration: 1 }, "-=1")
+      .from(".hero-btns", { scale: 0.9, opacity: 0, duration: 0.8 }, "-=0.8");
+  }
 });
 
-// 2. THREE.JS 3D MULTIVERSE (Kept as provided)
+// 2. THREE.JS 3D MULTIVERSE
 const container = document.querySelector("#canvas-container");
 if (container) {
   const scene = new THREE.Scene();
@@ -123,12 +129,9 @@ if (container) {
     mouseY = e.clientY / window.innerHeight - 0.5;
   });
 
-  let time = 0;
   const animate = () => {
     requestAnimationFrame(animate);
-    time += 0.01;
-    const pulse = 1 + Math.sin(time * 0.5) * 0.1;
-    masterPlanet.scale.set(pulse, pulse, pulse);
+    const time = performance.now() * 0.001;
     masterPlanet.rotation.y += 0.002;
     satellites.forEach((s) => {
       s.userData.angle += s.userData.speed;
@@ -136,7 +139,6 @@ if (container) {
         masterPlanet.position.x + Math.cos(s.userData.angle) * s.userData.orbit;
       s.position.z =
         masterPlanet.position.z + Math.sin(s.userData.angle) * s.userData.orbit;
-      s.rotation.x += 0.02;
     });
     planets.forEach((p) => {
       p.userData.angle += p.userData.speed;
@@ -164,17 +166,11 @@ document.addEventListener("DOMContentLoaded", () => {
         duration: 0.3,
         scale: 0.8,
         opacity: 0,
-        ease: "power2.in",
         onComplete: () => {
           items.forEach((item) => {
             if (filterValue === "all" || item.classList.contains(filterValue)) {
               item.style.display = "block";
-              gsap.to(item, {
-                duration: 0.6,
-                scale: 1,
-                opacity: 1,
-                ease: "back.out(1.7)",
-              });
+              gsap.to(item, { duration: 0.6, scale: 1, opacity: 1 });
             } else {
               item.style.display = "none";
             }
@@ -187,28 +183,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // 4. UI INTERACTIONS (CURSOR & NAVIGATION)
 const cursor = document.querySelector(".cursor");
-document.addEventListener("mousemove", (e) => {
-  if (cursor) gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.2 });
-});
-
-const interactives = document.querySelectorAll(
-  "a, button, .story-card, .hamburger, .proof-card, .faq-question",
-);
-interactives.forEach((el) => {
-  el.addEventListener(
-    "mouseenter",
-    () =>
-      cursor &&
+if (cursor) {
+  document.addEventListener("mousemove", (e) => {
+    gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+  });
+  const interactives = document.querySelectorAll(
+    "a, button, .story-card, .hamburger, .proof-card, .faq-question",
+  );
+  interactives.forEach((el) => {
+    el.addEventListener("mouseenter", () =>
       gsap.to(cursor, {
         scale: 3.5,
         backgroundColor: "rgba(212, 175, 55, 0.2)",
       }),
-  );
-  el.addEventListener(
-    "mouseleave",
-    () => cursor && gsap.to(cursor, { scale: 1, backgroundColor: "#d4af37" }),
-  );
-});
+    );
+    el.addEventListener("mouseleave", () =>
+      gsap.to(cursor, { scale: 1, backgroundColor: "#d4af37" }),
+    );
+  });
+}
 
 // Scroll Reveal
 gsap.registerPlugin(ScrollTrigger);
@@ -226,7 +219,7 @@ gsap.utils.toArray(".reveal").forEach((elem) => {
   });
 });
 
-// MOBILE NAVIGATION - UPDATED WITH GSAP
+// MOBILE NAVIGATION
 const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("nav-links");
 const links = document.querySelectorAll(".nav-links a");
@@ -234,34 +227,68 @@ const links = document.querySelectorAll(".nav-links a");
 if (hamburger && navLinks) {
   hamburger.addEventListener("click", () => {
     const isOpen = navLinks.classList.contains("active");
-
-    // Toggle Classes
     hamburger.classList.toggle("active");
     navLinks.classList.toggle("active");
-
-    // Premium Link Animation
     if (!isOpen) {
       gsap.fromTo(
         links,
         { y: 30, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          stagger: 0.1,
-          duration: 0.6,
-          ease: "power4.out",
-          delay: 0.3,
-        },
+        { y: 0, opacity: 1, stagger: 0.1, duration: 0.6, delay: 0.3 },
       );
     }
   });
-
-  // Close menu when a link is clicked
-  links.forEach((link) => {
+  links.forEach((link) =>
     link.addEventListener("click", () => {
       hamburger.classList.remove("active");
       navLinks.classList.remove("active");
-    });
+    }),
+  );
+}
+
+// 5. FORM SUBMISSION (HIRE ME LOGIC)
+const contactForm = document.getElementById("contactForm");
+if (contactForm) {
+  contactForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = contactForm.querySelector("button");
+    const originalText = btn.innerHTML;
+
+    // UI Feedback
+    btn.innerHTML = "SENDING...";
+    btn.disabled = true;
+
+    const formData = {
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      subject: document.getElementById("subject").value,
+      message: document.getElementById("message").value,
+    };
+
+    try {
+      // Points to Vercel Serverless Function
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        btn.innerHTML = "MESSAGE SENT";
+        btn.style.backgroundColor = "#28a745";
+        contactForm.reset();
+      } else {
+        throw new Error("Failed to send");
+      }
+    } catch (err) {
+      btn.innerHTML = "ERROR: TRY AGAIN";
+      btn.style.backgroundColor = "#ff4d4d";
+    } finally {
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        btn.style.backgroundColor = "";
+      }, 4000);
+    }
   });
 }
 
